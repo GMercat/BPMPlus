@@ -1,0 +1,18 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!-- BPM Text Style -->
+    <style name="BPMStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/BPMTextSize</item>
+    </style>
+
+    <!-- Element BPMList Text Style -->
+    <style name="BPMListStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/ElementTextSize</item>
+    </style>
+
+</resources>
