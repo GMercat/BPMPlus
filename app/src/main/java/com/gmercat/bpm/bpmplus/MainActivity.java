@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -90,15 +91,6 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         });
 
 
-        // TODO Test de Liste
-        HashMap<String, String> Element;
-        for (int i = 0; i < 5; i++) {
-            Element = new HashMap<>();
-            Element.put("Title", Integer.toString(i));
-            Element.put("BPM", Integer.toString(i * 10));
-            BPMList.add(Element);
-        }
-
         ListAdapter MyListAdapter = new SimpleAdapter(
                 this,
                 BPMList,
@@ -107,6 +99,8 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
                 new int[] {R.id.element_title_text, R.id.element_text_bpm});
 
         BPMListView.setAdapter (MyListAdapter);
+
+        ((BaseAdapter)MyListAdapter).notifyDataSetChanged ();
     }
 
     @Override
@@ -133,7 +127,10 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
 
     @Override
     public void onDialogMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        // TODO Add List
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
+        HashMap<String, String> Element = new HashMap<>();
+        Element.put("Title", message);
+        Element.put("BPM", Integer.toString(BPMValue));
+        BPMList.add(Element);
     }
 }
