@@ -1,6 +1,7 @@
 package com.gmercat.bpm.bpmplus;
 
 import android.app.FragmentManager;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,17 +26,18 @@ import static java.lang.Math.*;
 public class MainActivity extends ActionBarActivity implements DialogTitle.Communicator{
 
     /// Members
-    List<HashMap<String, String>> BPMList = new ArrayList<>(); // TODO Charger les données
-    ListView    BPMListView;
-    TextView    BPMText = null;
-    Button      ResetButton = null;
-    Button      BPMButton = null;
-    Button      SaveButton = null;
+    private List<HashMap<String, String>> BPMList = new ArrayList<>();
+    private ListView    BPMListView;
+    private TextView    BPMText = null;
+    private Button      ResetButton = null;
+    private Button      BPMButton = null;
+    private Button      SaveButton = null;
+    private BPMDAO      BPMDataAcces = null;
 
-    long    LastCurrentTime = 0;
-    int     NbGap       = -1;
-    int     GapTime     = 0;
-    int     BPMValue    = 0;
+    private long    LastCurrentTime = 0;
+    private int     NbGap       = -1;
+    private int     GapTime     = 0;
+    private int     BPMValue    = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +72,7 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         ResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LastCurrentTime = 0;
-                NbGap = -1;
-                GapTime = 0;
-                BPMValue = 0;
-
-                BPMText.setText(String.valueOf(BPMValue));
+                resetBPMValue ();
             }
         });
 
@@ -90,7 +87,21 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
             }
         });
 
+        BPMDataAcces = new BPMDAO (this);
+        BPMDataAcces.open();
+        Cursor BPMCursor = BPMDataAcces.getAllBPMs ();
 
+        while (BPMCursor.moveToNext()) {
+            String Title    = BPMCursor.getString(BPMCursor.getColumnIndex(BPMDAO.NAME));
+            int    BPMValue = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.VALUE));
+
+            HashMap<String, String> Element = new HashMap<>();
+            Element.put("Title", Title);
+            Element.put("BPM", Integer.toString(BPMValue));
+            BPMList.add(Element);
+        }
+
+    // TODO Use ArrayAdapter
         ListAdapter MyListAdapter = new SimpleAdapter(
                 this,
                 BPMList,
@@ -101,6 +112,12 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         BPMListView.setAdapter (MyListAdapter);
 
         ((BaseAdapter)MyListAdapter).notifyDataSetChanged ();
+    }
+
+    @Override
+    protected void onDestroy () {
+        super.onDestroy ();
+        BPMDataAcces.close ();
     }
 
     @Override
@@ -126,11 +143,29 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
     }
 
     @Override
-    public void onDialogMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
+    public void onDialogMessage(String Message) {
+        Toast.makeText(this, Message, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
+
+        // Database
+        BPM NewBPM = new BPM (Message, BPMValue);
+        int IdNewBPM = BPMDataAcces.add(NewBPM);
+        NewBPM.setId (IdNewBPM);
+
+        // List TODO list<BPM>
         HashMap<String, String> Element = new HashMap<>();
-        Element.put("Title", message);
+        Element.put("Title", Message);
         Element.put("BPM", Integer.toString(BPMValue));
         BPMList.add(Element);
+
+        resetBPMValue ();
+    }
+
+    private void resetBPMValue () {
+        LastCurrentTime = 0;
+        NbGap = -1;
+        GapTime = 0;
+        BPMValue = 0;
+
+        BPMText.setText(String.valueOf(BPMValue));
     }
 }
