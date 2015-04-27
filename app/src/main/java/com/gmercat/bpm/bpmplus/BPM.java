@@ -6,9 +6,9 @@ public class BPM {
     private String  mName;
     private int     mBpm;
 
-    public BPM (String aName, int aBpm) {
+    public BPM (int aId, String aName, int aBpm) {
         super ();
-        mId     = -1;
+        mId     = aId;
         mName   = aName;
         mBpm    = aBpm;
     }

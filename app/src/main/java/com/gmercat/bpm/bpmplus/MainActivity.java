@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -82,16 +83,23 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         Cursor BPMCursor = BPMDataAcces.getAllBPMs ();
 
         while (BPMCursor.moveToNext()) {
-            String Title    = BPMCursor.getString(BPMCursor.getColumnIndex(BPMDAO.NAME));
-            int    BPMValue = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.VALUE));
+            int    id       = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.KEY));
+            String title    = BPMCursor.getString(BPMCursor.getColumnIndex(BPMDAO.NAME));
+            int    bpmValue = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.VALUE));
 
-            BPM BPMElement = new BPM (Title, BPMValue);
+            BPM BPMElement = new BPM (id, title, bpmValue);
             BPMList.add(BPMElement);
         }
 
         BPMAdapter myBPMAdapter = new BPMAdapter (this, BPMList);
         bpmListView.setAdapter (myBPMAdapter);
         myBPMAdapter.notifyDataSetChanged ();
+
+        bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
+                onClickElement (aPosition);
+            }
+        });
     }
 
     @Override
@@ -126,12 +134,11 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
 
         // Database
-        BPM NewBPM = new BPM (Message, BPMValue);
+        BPM NewBPM = new BPM (0, Message, BPMValue);
         int IdNewBPM = BPMDataAcces.add(NewBPM);
         NewBPM.setId (IdNewBPM);
 
-        BPM BPMElement = new BPM (Message, BPMValue);
-        BPMList.add(BPMElement);
+        BPMList.add(NewBPM);
 
         resetBPMValue ();
     }
@@ -143,5 +150,12 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         BPMValue = 0;
 
         BPMText.setText(String.valueOf(BPMValue));
+    }
+
+    private void onClickElement (int aPosition) {
+        BPM pbm = BPMList.get (aPosition);
+        Toast.makeText(this, String.valueOf(pbm.getId()), Toast.LENGTH_SHORT).show(); // TODO
+
+        // TODO Réaliser la modification ou suppression de la liste et de BDD de l'item cliqué
     }
 }
