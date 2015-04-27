@@ -33,16 +33,24 @@ public class BPMAdapter extends BaseAdapter{
         return 0;
     }
 
-    public View getView (int aPosition, View aView, ViewGroup aParent) {
-        LayoutInflater inflater = (LayoutInflater)mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate (R.layout.element_list, aParent, false);
+    public View getView (int aPosition, View aConvertView, ViewGroup aParent) {
+        View view = aConvertView;
+        // First check to see if the view is null. if so, we have to inflate it.
+        // To inflate it basically means to render, or show, the view.
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.element_list, null);
+        }
 
-        TextView title = (TextView)itemView.findViewById(R.id.element_title_text);
-        TextView bpm   = (TextView)itemView.findViewById(R.id.element_text_bpm);
+        TextView title = (TextView)view.findViewById(R.id.element_title_text);
+        TextView bpm   = (TextView)view.findViewById(R.id.element_text_bpm);
 
-        title.setText(mListDatas.get (aPosition).getName ());
-        bpm.setText(mListDatas.get (aPosition).getBpmStr());
+        BPM bpmElement = mListDatas.get (aPosition);
+        if (bpmElement != null) {
+            title.setText(bpmElement.getName ());
+            bpm.setText(bpmElement.getBpmStr());
+        }
 
-        return itemView;
+        return view;
     }
 }

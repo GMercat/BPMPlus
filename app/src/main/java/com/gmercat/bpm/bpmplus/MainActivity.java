@@ -20,13 +20,8 @@ import static java.lang.Math.*;
 public class MainActivity extends ActionBarActivity implements DialogTitle.Communicator{
 
     /// Members
-    // private List<HashMap<String, String>> BPMList = new ArrayList<>();
-    private ArrayList<BPM> BPMList;
-    private ListView    BPMListView;
+    private ArrayList<BPM> BPMList = new ArrayList<> ();
     private TextView    BPMText = null;
-    private Button      ResetButton = null;
-    private Button      BPMButton = null;
-    private Button      SaveButton = null;
     private BPMDAO      BPMDataAcces = null;
 
     private long    LastCurrentTime = 0;
@@ -39,14 +34,14 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BPMListView = (ListView) findViewById(R.id.listBPM);
-        BPMListView.setVisibility(View.VISIBLE);
+        ListView bpmListView = (ListView) findViewById(R.id.listBPM);
+        bpmListView.setVisibility(View.VISIBLE);
 
         BPMText = (TextView)findViewById(R.id.bpm_text);
         BPMText.setText (String.valueOf (BPMValue));
 
-        BPMButton = (Button)findViewById(R.id.bpm_button);
-        BPMButton.setOnClickListener(new View.OnClickListener() {
+        Button bpmButton = (Button)findViewById(R.id.bpm_button);
+        bpmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 long CurrentTime = System.currentTimeMillis();
@@ -63,16 +58,16 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
             }
         });
 
-        ResetButton =  (Button)findViewById(R.id.reset_button);
-        ResetButton.setOnClickListener(new View.OnClickListener() {
+        Button resetButton =  (Button)findViewById(R.id.reset_button);
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resetBPMValue ();
             }
         });
 
-        SaveButton =  (Button)findViewById(R.id.save_button);
-        SaveButton.setOnClickListener(new View.OnClickListener() {
+        Button saveButton =  (Button)findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO
@@ -90,28 +85,12 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
             String Title    = BPMCursor.getString(BPMCursor.getColumnIndex(BPMDAO.NAME));
             int    BPMValue = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.VALUE));
 
-            // HashMap<String, String> Element = new HashMap<>();
-            // Element.put("Title", Title);
-            // Element.put("BPM", Integer.toString(BPMValue));
-            // BPMList.add(Element);
-
             BPM BPMElement = new BPM (Title, BPMValue);
             BPMList.add(BPMElement);
         }
 
-    // TODO Use ArrayAdapter
-    //    ListAdapter MyListAdapter = new SimpleAdapter(
-    //            this,
-    //            BPMList,
-    //            R.layout.element_list,
-    //            new String[] {"Title", "BPM"},
-    //            new int[] {R.id.element_title_text, R.id.element_text_bpm});
-    //
-    //    BPMListView.setAdapter (MyListAdapter);
-    //    ((BaseAdapter)MyListAdapter).notifyDataSetChanged ();
-
         BPMAdapter myBPMAdapter = new BPMAdapter (this, BPMList);
-        BPMListView.setAdapter (myBPMAdapter);
+        bpmListView.setAdapter (myBPMAdapter);
         myBPMAdapter.notifyDataSetChanged ();
     }
 
@@ -135,7 +114,6 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -151,12 +129,6 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         BPM NewBPM = new BPM (Message, BPMValue);
         int IdNewBPM = BPMDataAcces.add(NewBPM);
         NewBPM.setId (IdNewBPM);
-
-        // List TODO list<BPM>
-        //HashMap<String, String> Element = new HashMap<>();
-        //Element.put("Title", Message);
-        //Element.put("BPM", Integer.toString(BPMValue));
-        //BPMList.add(Element);
 
         BPM BPMElement = new BPM (Message, BPMValue);
         BPMList.add(BPMElement);
