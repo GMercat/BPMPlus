@@ -32,6 +32,9 @@ public class BPM {
     public int getBpm () {
         return mBpm;
     }
+    public String getBpmStr () {
+        return String.valueOf (mBpm);
+    }
 
     public void setBpm (int aBpm) {
         mBpm = aBpm;

@@ -7,18 +7,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import static java.lang.Math.*;
 
@@ -26,7 +20,8 @@ import static java.lang.Math.*;
 public class MainActivity extends ActionBarActivity implements DialogTitle.Communicator{
 
     /// Members
-    private List<HashMap<String, String>> BPMList = new ArrayList<>();
+    // private List<HashMap<String, String>> BPMList = new ArrayList<>();
+    private ArrayList<BPM> BPMList;
     private ListView    BPMListView;
     private TextView    BPMText = null;
     private Button      ResetButton = null;
@@ -95,23 +90,29 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
             String Title    = BPMCursor.getString(BPMCursor.getColumnIndex(BPMDAO.NAME));
             int    BPMValue = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.VALUE));
 
-            HashMap<String, String> Element = new HashMap<>();
-            Element.put("Title", Title);
-            Element.put("BPM", Integer.toString(BPMValue));
-            BPMList.add(Element);
+            // HashMap<String, String> Element = new HashMap<>();
+            // Element.put("Title", Title);
+            // Element.put("BPM", Integer.toString(BPMValue));
+            // BPMList.add(Element);
+
+            BPM BPMElement = new BPM (Title, BPMValue);
+            BPMList.add(BPMElement);
         }
 
     // TODO Use ArrayAdapter
-        ListAdapter MyListAdapter = new SimpleAdapter(
-                this,
-                BPMList,
-                R.layout.element_list,
-                new String[] {"Title", "BPM"},
-                new int[] {R.id.element_title_text, R.id.element_text_bpm});
+    //    ListAdapter MyListAdapter = new SimpleAdapter(
+    //            this,
+    //            BPMList,
+    //            R.layout.element_list,
+    //            new String[] {"Title", "BPM"},
+    //            new int[] {R.id.element_title_text, R.id.element_text_bpm});
+    //
+    //    BPMListView.setAdapter (MyListAdapter);
+    //    ((BaseAdapter)MyListAdapter).notifyDataSetChanged ();
 
-        BPMListView.setAdapter (MyListAdapter);
-
-        ((BaseAdapter)MyListAdapter).notifyDataSetChanged ();
+        BPMAdapter myBPMAdapter = new BPMAdapter (this, BPMList);
+        BPMListView.setAdapter (myBPMAdapter);
+        myBPMAdapter.notifyDataSetChanged ();
     }
 
     @Override
@@ -152,10 +153,13 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         NewBPM.setId (IdNewBPM);
 
         // List TODO list<BPM>
-        HashMap<String, String> Element = new HashMap<>();
-        Element.put("Title", Message);
-        Element.put("BPM", Integer.toString(BPMValue));
-        BPMList.add(Element);
+        //HashMap<String, String> Element = new HashMap<>();
+        //Element.put("Title", Message);
+        //Element.put("BPM", Integer.toString(BPMValue));
+        //BPMList.add(Element);
+
+        BPM BPMElement = new BPM (Message, BPMValue);
+        BPMList.add(BPMElement);
 
         resetBPMValue ();
     }
