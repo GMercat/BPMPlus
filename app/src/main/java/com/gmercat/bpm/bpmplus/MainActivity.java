@@ -21,9 +21,10 @@ import static java.lang.Math.*;
 public class MainActivity extends ActionBarActivity implements DialogTitle.Communicator{
 
     /// Members
-    private ArrayList<BPM> BPMList = new ArrayList<> ();
-    private TextView    BPMText = null;
-    private BPMDAO      BPMDataAcces = null;
+    private ArrayList<BPM>  BPMList     = new ArrayList<> ();
+    private TextView        BPMText     = null;
+    private BPMDAO          BPMDataAcces    = null;
+    private BPMAdapter      BPMAdapter      = null;
 
     private long    LastCurrentTime = 0;
     private int     NbGap       = -1;
@@ -91,13 +92,20 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
             BPMList.add(BPMElement);
         }
 
-        BPMAdapter myBPMAdapter = new BPMAdapter (this, BPMList);
-        bpmListView.setAdapter (myBPMAdapter);
-        myBPMAdapter.notifyDataSetChanged ();
+        BPMAdapter = new BPMAdapter (this, BPMList);
+        bpmListView.setAdapter (BPMAdapter);
+        BPMAdapter.notifyDataSetChanged ();
 
         bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
-                onClickElement (aPosition);
+                setElement (aPosition);
+            }
+        });
+
+        bpmListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
+                deleteElement (aPosition);
+                return true;
             }
         });
     }
@@ -152,10 +160,17 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         BPMText.setText(String.valueOf(BPMValue));
     }
 
-    private void onClickElement (int aPosition) {
+    private void setElement (int aPosition) {
         BPM pbm = BPMList.get (aPosition);
-        Toast.makeText(this, String.valueOf(pbm.getId()), Toast.LENGTH_SHORT).show(); // TODO
+        Toast.makeText(this, "Set " + String.valueOf(pbm.getId()), Toast.LENGTH_SHORT).show(); // TODO
 
-        // TODO Réaliser la modification ou suppression de la liste et de BDD de l'item cliqué
+        // TODO Réaliser la modification de la liste et de BDD de l'item cliqué
+    }
+
+    private void deleteElement (int aPosition) {
+        // TODO Validation by dialogue message
+        BPMDataAcces.del (BPMList.get (aPosition).getId());
+        BPMList.remove (aPosition);
+        BPMAdapter.notifyDataSetChanged ();
     }
 }
