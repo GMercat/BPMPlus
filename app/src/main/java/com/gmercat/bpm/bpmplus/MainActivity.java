@@ -1,6 +1,5 @@
 package com.gmercat.bpm.bpmplus;
 
-import android.app.FragmentManager;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -18,18 +17,21 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 
-public class MainActivity extends ActionBarActivity implements DialogNewElement.DialogNewElementListener {
+public class MainActivity   extends ActionBarActivity
+                            implements  DialogNewElement.DialogNewElementListener,
+                                        DialogDeleteElement.DialogDeleteElementListener{
 
     /// Members
-    private ArrayList<BPM>  BPMList     = new ArrayList<> ();
-    private TextView        BPMText     = null;
+    private ArrayList<BPM>  BPMList         = new ArrayList<> ();
+    private TextView        BPMText         = null;
     private BPMDAO          BPMDataAcces    = null;
     private BPMAdapter      BPMAdapter      = null;
 
-    private long    LastCurrentTime = 0;
-    private int     NbGap       = -1;
-    private int     GapTime     = 0;
-    private int     BPMValue    = 0;
+    private long    LastCurrentTime         = 0;
+    private int     NbGap                   = -1;
+    private int     GapTime                 = 0;
+    private int     BPMValue                = 0;
+    private int     PositionElementDelete   = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +74,8 @@ public class MainActivity extends ActionBarActivity implements DialogNewElement.
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
-                FragmentManager manager = getFragmentManager();
-                DialogNewElement dialogNewElement = new DialogNewElement();
-                dialogNewElement.show(manager, "dialog_title");
+                DialogNewElement newDialogNewElement = new DialogNewElement();
+                newDialogNewElement.show(getFragmentManager(), "newElement");
             }
         });
 
@@ -104,7 +104,9 @@ public class MainActivity extends ActionBarActivity implements DialogNewElement.
 
         bpmListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
-                deleteElement (aPosition);
+                PositionElementDelete = aPosition;
+                DialogDeleteElement newDialogDeleteElement = new DialogDeleteElement();
+                newDialogDeleteElement.show(getFragmentManager(), "deleteElement");
                 return true;
             }
         });
@@ -148,6 +150,17 @@ public class MainActivity extends ActionBarActivity implements DialogNewElement.
         resetBPMValue ();
     }
 
+    @Override
+    public void onDialogDeleteElementPositiveClick() {
+        if (PositionElementDelete != -1) {
+            BPMDataAcces.del(BPMList.get(PositionElementDelete).getId());
+            BPMList.remove(PositionElementDelete);
+            BPMAdapter.notifyDataSetChanged();
+
+            PositionElementDelete = -1;
+        }
+    }
+
     private void resetBPMValue () {
         LastCurrentTime = 0;
         NbGap = -1;
@@ -162,12 +175,5 @@ public class MainActivity extends ActionBarActivity implements DialogNewElement.
         Toast.makeText(this, "Set " + String.valueOf(pbm.getId()), Toast.LENGTH_SHORT).show(); // TODO
 
         // TODO Réaliser la modification de la liste et de BDD de l'item cliqué
-    }
-
-    private void deleteElement (int aPosition) {
-        // TODO Validation by dialogue message
-        BPMDataAcces.del (BPMList.get (aPosition).getId());
-        BPMList.remove (aPosition);
-        BPMAdapter.notifyDataSetChanged ();
     }
 }

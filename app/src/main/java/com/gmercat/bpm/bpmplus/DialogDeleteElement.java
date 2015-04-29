@@ -8,27 +8,24 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
-public class DialogNewElement extends DialogFragment{
+public class DialogDeleteElement extends DialogFragment{
 
-    public interface DialogNewElementListener {
-        public void onDialogNewElementPositiveClick(DialogNewElement dialog);
+    public interface DialogDeleteElementListener {
+        public void onDialogDeleteElementPositiveClick();
     }
 
     /// Members
-    DialogNewElementListener    listener;
-    EditText                    title;
-
-    public String getTitle () {
-        return title.toString();
-    }
+    DialogDeleteElementListener listener;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+
         View view = inflater.inflate(R.layout.dialog_title, null);
-        title = (EditText) view.findViewById(R.id.add_title);
+        TextView Text = (TextView)view.findViewById(R.id.delete_title);
+        Text.setText (String.valueOf ("TODO Text")); // TODO
 
         builder.setView(view)
         // Add action buttons
@@ -38,10 +35,10 @@ public class DialogNewElement extends DialogFragment{
                     // Nothing
                 }
             })
-            .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {
+            .setPositiveButton(R.string.delete_button_text, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onDialogNewElementPositiveClick(DialogNewElement.this);
+                    listener.onDialogDeleteElementPositiveClick();
                 }
             });
 
@@ -52,9 +49,9 @@ public class DialogNewElement extends DialogFragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (DialogNewElementListener)activity;
+            listener = (DialogDeleteElementListener)activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement DialogNewElementListener");
+            throw new ClassCastException(activity.toString() + " must implement DialogDeleteElementListener");
         }
     }
 }
