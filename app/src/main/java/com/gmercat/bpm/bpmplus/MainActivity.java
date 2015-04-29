@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 
-public class MainActivity extends ActionBarActivity implements DialogTitle.Communicator{
+public class MainActivity extends ActionBarActivity implements DialogNewElement.DialogNewElementListener {
 
     /// Members
     private ArrayList<BPM>  BPMList     = new ArrayList<> ();
@@ -74,8 +74,8 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
             public void onClick(View v) {
                 // TODO
                 FragmentManager manager = getFragmentManager();
-                DialogTitle dialogTitle = new DialogTitle();
-                dialogTitle.show(manager, "dialog_title");
+                DialogNewElement dialogNewElement = new DialogNewElement();
+                dialogNewElement.show(manager, "dialog_title");
             }
         });
 
@@ -129,20 +129,17 @@ public class MainActivity extends ActionBarActivity implements DialogTitle.Commu
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onDialogMessage(String Message) {
-        Toast.makeText(this, Message, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
+    public void onDialogNewElementPositiveClick(DialogNewElement dialog) {
+        String title = dialog.getTitle ();
+
+        Toast.makeText(this, title, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
 
         // Database
-        BPM NewBPM = new BPM (0, Message, BPMValue);
+        BPM NewBPM = new BPM (0, title, BPMValue);
         int IdNewBPM = BPMDataAcces.add(NewBPM);
         NewBPM.setId (IdNewBPM);
 
