@@ -7,9 +7,10 @@
     <string name="reset_button_text">Reset</string>
     <string name="save_button_text">Save</string>
     <string name="cancel_button_text">Retour</string>
-    <string name="delete_button_text">Retour</string>
+    <string name="delete_button_text">Supprimer</string>
+    <string name="delete_text">Êtes-vous certain de vouloir le supprimer ?</string>
     <string name="ok_button_text">Ok</string>
 
-    <string name="add_title">Titre d'ajout</string>
+    <string name="add_title">Titre d\'ajout</string>
     <string name="delete_title">Titre de suppr</string>
 </resources>

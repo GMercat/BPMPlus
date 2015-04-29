@@ -21,7 +21,7 @@ public class DialogNewElement extends DialogFragment{
     EditText                    title;
 
     public String getTitle () {
-        return title.toString();
+        return title.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {

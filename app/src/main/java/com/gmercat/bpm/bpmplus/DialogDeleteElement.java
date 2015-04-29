@@ -23,9 +23,9 @@ public class DialogDeleteElement extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.dialog_title, null);
+        View view = inflater.inflate(R.layout.dialog_delete, null);
         TextView Text = (TextView)view.findViewById(R.id.delete_title);
-        Text.setText (String.valueOf ("TODO Text")); // TODO
+        Text.setText (R.string.delete_text);
 
         builder.setView(view)
         // Add action buttons
