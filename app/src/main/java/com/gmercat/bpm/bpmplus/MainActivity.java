@@ -19,6 +19,7 @@ import static java.lang.Math.*;
 
 public class MainActivity   extends ActionBarActivity
                             implements  DialogNewElement.DialogNewElementListener,
+                                        DialogSetElement.DialogSetElementListener,
                                         DialogDeleteElement.DialogDeleteElementListener{
 
     /// Members
@@ -31,7 +32,7 @@ public class MainActivity   extends ActionBarActivity
     private int     NbGap                   = -1;
     private int     GapTime                 = 0;
     private int     BPMValue                = 0;
-    private int     PositionElementDelete   = -1;
+    private int     PositionElementSelected = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,13 +99,15 @@ public class MainActivity   extends ActionBarActivity
 
         bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
-                setElement (aPosition);
+                PositionElementSelected = aPosition;
+                DialogSetElement newDialogSetElement = new DialogSetElement();
+                newDialogSetElement.show(getFragmentManager(), "setElement");
             }
         });
 
         bpmListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
-                PositionElementDelete = aPosition;
+                PositionElementSelected = aPosition;
                 DialogDeleteElement newDialogDeleteElement = new DialogDeleteElement();
                 newDialogDeleteElement.show(getFragmentManager(), "deleteElement");
                 return true;
@@ -151,13 +154,28 @@ public class MainActivity   extends ActionBarActivity
     }
 
     @Override
-    public void onDialogDeleteElementPositiveClick() {
-        if (PositionElementDelete != -1) {
-            BPMDataAcces.del(BPMList.get(PositionElementDelete).getId());
-            BPMList.remove(PositionElementDelete);
+    public void onDialogSetElementPositiveClick(DialogSetElement dialog) {
+        if (PositionElementSelected != -1) {
+            String title = dialog.getTitle();
+
+            Toast.makeText(this, title, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
+
+            BPMList.get(PositionElementSelected).setName(title);
+            BPMDataAcces.update(BPMList.get(PositionElementSelected));
             BPMAdapter.notifyDataSetChanged();
 
-            PositionElementDelete = -1;
+            PositionElementSelected = -1;
+        }
+    }
+
+    @Override
+    public void onDialogDeleteElementPositiveClick() {
+        if (PositionElementSelected != -1) {
+            BPMDataAcces.del(BPMList.get(PositionElementSelected).getId());
+            BPMList.remove(PositionElementSelected);
+            BPMAdapter.notifyDataSetChanged();
+
+            PositionElementSelected = -1;
         }
     }
 
@@ -168,12 +186,5 @@ public class MainActivity   extends ActionBarActivity
         BPMValue = 0;
 
         BPMText.setText(String.valueOf(BPMValue));
-    }
-
-    private void setElement (int aPosition) {
-        BPM pbm = BPMList.get (aPosition);
-        Toast.makeText(this, "Set " + String.valueOf(pbm.getId()), Toast.LENGTH_SHORT).show(); // TODO
-
-        // TODO Réaliser la modification de la liste et de BDD de l'item cliqué
     }
 }

@@ -48,6 +48,7 @@ public class BPMDAO {
 
     public void update (BPM aBpm) {
         ContentValues Value = new ContentValues ();
+        Value.put(NAME, aBpm.getName ());
         Value.put(VALUE, aBpm.getBpm ());
         mDb.update(TABLE_NAME, Value, KEY  + " = ?", new String[] {String.valueOf(aBpm.getId())});
     }

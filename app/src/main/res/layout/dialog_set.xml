@@ -5,11 +5,11 @@
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:hint="@string/add_title"
+        android:layout_height="0dp"
+        android:hint="@string/set_title"
         android:layout_weight="1"
         android:maxLength="32"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/add_title" />
+        android:id="@+id/set_title" />
 </LinearLayout>

@@ -12,5 +12,6 @@
     <string name="ok_button_text">Ok</string>
 
     <string name="add_title">Titre d\'ajout</string>
+    <string name="set_title">Titre de modif</string>
     <string name="delete_title">Titre de suppr</string>
 </resources>

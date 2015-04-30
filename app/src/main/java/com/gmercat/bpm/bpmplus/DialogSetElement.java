@@ -10,14 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-public class DialogNewElement extends DialogFragment{
+public class DialogSetElement extends DialogFragment{
 
-    public interface DialogNewElementListener {
-        public void onDialogNewElementPositiveClick(DialogNewElement dialog);
+    public interface DialogSetElementListener {
+        public void onDialogSetElementPositiveClick(DialogSetElement dialog);
     }
 
     /// Members
-    DialogNewElementListener    listener;
+    DialogSetElementListener    listener;
     EditText                    title;
 
     public String getTitle () {
@@ -41,7 +41,7 @@ public class DialogNewElement extends DialogFragment{
             .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onDialogNewElementPositiveClick(DialogNewElement.this);
+                    listener.onDialogSetElementPositiveClick(DialogSetElement.this);
                 }
             });
 
@@ -52,7 +52,7 @@ public class DialogNewElement extends DialogFragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (DialogNewElementListener)activity;
+            listener = (DialogSetElementListener)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement DialogNewElementListener");
         }
