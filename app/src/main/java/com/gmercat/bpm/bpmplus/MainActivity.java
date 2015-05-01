@@ -159,7 +159,7 @@ public class MainActivity   extends ActionBarActivity
     @Override
     public void onDialogSetElementPositiveClick(DialogSetElement dialog) {
         if (PositionElementSelected != -1) {
-            String title = dialog.getTitle();
+            String title = dialog.getElementNameEdit();
 
             Toast.makeText(this, title, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
 

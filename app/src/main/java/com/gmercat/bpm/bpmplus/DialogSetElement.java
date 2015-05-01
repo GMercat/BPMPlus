@@ -19,23 +19,23 @@ public class DialogSetElement extends DialogFragment{
 
     /// Members
     DialogSetElementListener    listener;
-    EditText                    title;
+    EditText                    ElementNameEdit;
     String                      ElementName;
 
     public void setElementName (String aElementName) {
         ElementName = aElementName;
     }
 
-    public String getTitle () {
-        return title.getText().toString();
+    public String getElementNameEdit() {
+        return ElementNameEdit.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new, null);
-        title = (EditText) view.findViewById(R.id.add_title);
-        title.setText(ElementName, TextView.BufferType.EDITABLE);
+        ElementNameEdit = (EditText) view.findViewById(R.id.add_title);
+        ElementNameEdit.setText(ElementName, TextView.BufferType.EDITABLE);
 
         builder.setView(view)
         // Add action buttons
