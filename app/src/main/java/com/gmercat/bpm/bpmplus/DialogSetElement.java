@@ -9,16 +9,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class DialogSetElement extends DialogFragment{
 
     public interface DialogSetElementListener {
-        public void onDialogSetElementPositiveClick(DialogSetElement dialog);
+        void onDialogSetElementPositiveClick(DialogSetElement dialog);
     }
 
     /// Members
     DialogSetElementListener    listener;
     EditText                    title;
+    String                      ElementName;
+
+    public void setElementName (String aElementName) {
+        ElementName = aElementName;
+    }
 
     public String getTitle () {
         return title.getText().toString();
@@ -29,6 +35,7 @@ public class DialogSetElement extends DialogFragment{
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new, null);
         title = (EditText) view.findViewById(R.id.add_title);
+        title.setText(ElementName, TextView.BufferType.EDITABLE);
 
         builder.setView(view)
         // Add action buttons

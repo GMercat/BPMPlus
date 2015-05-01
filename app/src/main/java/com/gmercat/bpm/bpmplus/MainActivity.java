@@ -100,8 +100,11 @@ public class MainActivity   extends ActionBarActivity
         bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
                 PositionElementSelected = aPosition;
-                DialogSetElement newDialogSetElement = new DialogSetElement();
-                newDialogSetElement.show(getFragmentManager(), "setElement");
+                if (PositionElementSelected != -1) {
+                    DialogSetElement newDialogSetElement = new DialogSetElement();
+                    newDialogSetElement.setElementName(BPMList.get(PositionElementSelected).getName());
+                    newDialogSetElement.show(getFragmentManager(), "setElement");
+                }
             }
         });
 
