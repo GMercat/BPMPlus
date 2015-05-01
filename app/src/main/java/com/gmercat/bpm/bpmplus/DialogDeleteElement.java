@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class DialogDeleteElement extends DialogFragment{
 
     public interface DialogDeleteElementListener {
-        public void onDialogDeleteElementPositiveClick();
+        void onDialogDeleteElementPositiveClick();
     }
 
     /// Members
@@ -24,7 +24,7 @@ public class DialogDeleteElement extends DialogFragment{
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View view = inflater.inflate(R.layout.dialog_delete, null);
-        TextView Text = (TextView)view.findViewById(R.id.delete_title);
+        TextView Text = (TextView)view.findViewById(R.id.delete_element);
         Text.setText (R.string.delete_text);
 
         builder.setView(view)

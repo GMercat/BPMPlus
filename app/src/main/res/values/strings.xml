@@ -3,15 +3,16 @@
 
     <string name="bpm">0</string>
     <string name="action_settings">Settings</string>
-    <string name="button_text">Push</string>
-    <string name="reset_button_text">Reset</string>
-    <string name="save_button_text">Save</string>
+    <string name="button_text">+</string>
+    <string name="reset_button_text">R</string>
+    <string name="save_button_text">S</string>
     <string name="cancel_button_text">Retour</string>
     <string name="delete_button_text">Supprimer</string>
     <string name="delete_text">Êtes-vous certain de vouloir le supprimer ?</string>
     <string name="ok_button_text">Ok</string>
 
-    <string name="add_title">Titre d\'ajout</string>
-    <string name="set_title">Titre de modif</string>
-    <string name="delete_title">Titre de suppr</string>
+    <string name="add_element_title">Ajout d\'un nouvel élément</string>
+    <string name="add_element">Nouveau</string>
+    <string name="set_element_title">Renommage d\'un élément</string>
+    <string name="set_element">Titre de modif</string>
 </resources>

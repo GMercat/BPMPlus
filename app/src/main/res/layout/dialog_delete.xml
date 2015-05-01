@@ -4,11 +4,11 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:textAppearance="@style/DialogTitleStyle"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:hint="@string/delete_title"
         android:layout_weight="1"
         android:singleLine="false"
-        android:id="@+id/delete_title"
+        android:id="@+id/delete_element"
         android:gravity="center" />
 </LinearLayout>

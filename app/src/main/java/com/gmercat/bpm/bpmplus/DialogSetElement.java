@@ -33,8 +33,8 @@ public class DialogSetElement extends DialogFragment{
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_new, null);
-        ElementNameEdit = (EditText) view.findViewById(R.id.add_title);
+        View view = inflater.inflate(R.layout.dialog_set, null);
+        ElementNameEdit = (EditText) view.findViewById(R.id.set_element);
         ElementNameEdit.setText(ElementName, TextView.BufferType.EDITABLE);
 
         builder.setView(view)

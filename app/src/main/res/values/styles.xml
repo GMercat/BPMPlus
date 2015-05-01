@@ -10,6 +10,11 @@
         <item name="android:textSize">@dimen/BPMTextSize</item>
     </style>
 
+    <!-- Dialog title Text Style -->
+    <style name="DialogTitleStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/DialogTitleTextSize</item>
+    </style>
+
     <!-- Element BPMList Text Style -->
     <style name="BPMListStyle" parent="@android:style/TextAppearance" >
         <item name="android:textSize">@dimen/ElementTextSize</item>
