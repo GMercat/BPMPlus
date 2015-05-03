@@ -53,12 +53,14 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:text="@string/save_button_text"
             android:id="@+id/save_button"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:src="@drawable/save_button"
+            android:scaleType="fitCenter"
+            android:background="#00ffffff" />
     </LinearLayout>
 
 </LinearLayout>
