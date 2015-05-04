@@ -46,7 +46,7 @@ public class MainActivity   extends ActionBarActivity
         BPMText = (TextView)findViewById(R.id.bpm_text);
         BPMText.setText (String.valueOf (BPMValue));
 
-        Button bpmButton = (Button)findViewById(R.id.bpm_button);
+        ImageButton bpmButton = (ImageButton)findViewById(R.id.bpm_button);
         bpmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class MainActivity   extends ActionBarActivity
             }
         });
 
-        Button resetButton =  (Button)findViewById(R.id.reset_button);
+        ImageButton resetButton =  (ImageButton)findViewById(R.id.reset_button);
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

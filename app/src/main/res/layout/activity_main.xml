@@ -18,40 +18,37 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1" />
 
+    <TextView android:text="@string/bpm"
+        android:textAppearance="@style/BPMStyle"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bpm_text"
+        android:layout_weight="2" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
 
-        <Button
+        <ImageButton
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:text="@string/reset_button_text"
             android:id="@+id/reset_button"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:src="@drawable/reset_button"
+            android:scaleType="fitCenter"
+            android:background="#00ffffff" />
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ImageButton
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView android:text="@string/bpm"
-                android:textAppearance="@style/BPMStyle"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/bpm_text"
-                android:layout_weight="1" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:text="@string/button_text"
-                android:id="@+id/bpm_button"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:layout_height="fill_parent"
+            android:id="@+id/bpm_button"
+            android:layout_weight="1"
+            android:src="@drawable/push_button"
+            android:scaleType="fitCenter"
+            android:background="#00ffffff" />
 
         <ImageButton
             android:layout_width="match_parent"
