@@ -21,19 +21,20 @@ public class DialogDeleteElement extends DialogFragment{
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+//        LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.dialog_delete, null);
-        TextView Text = (TextView)view.findViewById(R.id.delete_element);
-        Text.setText (R.string.delete_text);
+//        View view = inflater.inflate(R.layout.dialog_delete, null);
+//        TextView Text = (TextView)view.findViewById(R.id.delete_element);
+//        Text.setText (R.string.delete_text);
+//        builder.setView(view)
 
-        builder.setView(view)
+        builder.setMessage (R.string.delete_text)
         // Add action buttons
             .setNegativeButton(R.string.cancel_button_text, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Nothing
-                }
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Nothing
+            }
             })
             .setPositiveButton(R.string.delete_button_text, new DialogInterface.OnClickListener() {
                 @Override

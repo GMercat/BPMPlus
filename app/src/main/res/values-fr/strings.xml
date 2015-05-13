@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">BPM Plus</string>
+
+    <string name="bpm">0</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="cancel_button_text">Annuler</string>
+    <string name="delete_button_text">Supprimer</string>
+    <string name="delete_text">Supprimer cet élément ?</string>
+    <string name="ok_button_text">Ok</string>
+
+    <string name="add_element">Nouvel élément</string>
+    <string name="set_element">Titre de modif</string>
+    <string name="title_add_element">Ajout d\'un element</string>
+    <string name="title_set_element">Renommage de l\'element</string>
+</resources>

@@ -13,7 +13,7 @@ import android.widget.EditText;
 public class DialogNewElement extends DialogFragment{
 
     public interface DialogNewElementListener {
-        public void onDialogNewElementPositiveClick(DialogNewElement dialog);
+        void onDialogNewElementPositiveClick(DialogNewElement dialog);
     }
 
     /// Members
@@ -29,6 +29,8 @@ public class DialogNewElement extends DialogFragment{
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new, null);
         title = (EditText) view.findViewById(R.id.add_title);
+
+        builder.setTitle(R.string.title_add_element);
 
         builder.setView(view)
         // Add action buttons

@@ -8,8 +8,8 @@
         android:layout_height="0dp"
         android:hint="@string/set_element"
         android:layout_weight="1"
-        android:maxLength="32"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/set_element" />
+        android:id="@+id/set_element"
+        android:textAppearance="@style/EditDialogStyle" />
 </LinearLayout>

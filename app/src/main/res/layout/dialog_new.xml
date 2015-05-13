@@ -10,5 +10,6 @@
         android:layout_weight="1"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/add_title" />
+        android:id="@+id/add_title"
+        android:textAppearance="@style/EditDialogStyle" />
 </LinearLayout>
