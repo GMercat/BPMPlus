@@ -1,5 +1,6 @@
 package com.gmercat.bpm.bpmplus;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 
-public class MainActivity   extends ActionBarActivity
+public class MainActivity   extends Activity
                             implements  DialogNewElement.DialogNewElementListener,
                                         DialogSetElement.DialogSetElementListener,
                                         DialogDeleteElement.DialogDeleteElementListener{
