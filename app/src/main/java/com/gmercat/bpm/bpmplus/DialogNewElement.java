@@ -18,17 +18,17 @@ public class DialogNewElement extends DialogFragment{
 
     /// Members
     DialogNewElementListener    listener;
-    EditText                    title;
+    EditText element;
 
-    public String getTitle () {
-        return title.getText().toString();
+    public String getElement() {
+        return element.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new, null);
-        title = (EditText) view.findViewById(R.id.add_title);
+        element = (EditText) view.findViewById(R.id.add_element);
 
         builder.setTitle(R.string.title_add_element);
 

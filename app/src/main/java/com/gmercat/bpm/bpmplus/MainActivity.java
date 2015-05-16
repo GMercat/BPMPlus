@@ -2,17 +2,14 @@ package com.gmercat.bpm.bpmplus;
 
 import android.app.Activity;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -155,7 +152,7 @@ public class MainActivity   extends Activity
     @Override
     public void onDialogNewElementPositiveClick(DialogNewElement dialog) {
         // Database
-        BPM NewBPM = new BPM (0, dialog.getTitle (), BPMValue);
+        BPM NewBPM = new BPM (0, dialog.getElement(), BPMValue);
         int IdNewBPM = BPMDataAcces.add(NewBPM);
         NewBPM.setId (IdNewBPM);
 
