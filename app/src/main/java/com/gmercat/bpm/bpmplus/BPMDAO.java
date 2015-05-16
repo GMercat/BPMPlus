@@ -38,12 +38,16 @@ public class BPMDAO {
     public int add (BPM aBpm) {
         ContentValues Value = new ContentValues ();
         Value.put(NAME, aBpm.getName ());
-        Value.put(VALUE, aBpm.getBpm ());
+        Value.put(VALUE, aBpm.getBpm());
         return (int)mDb.insert(TABLE_NAME, null, Value);
     }
 
     public void del (long aId) {
-        mDb.delete(TABLE_NAME, KEY + " = ?", new String[] {String.valueOf(aId)});
+        mDb.delete(TABLE_NAME, KEY + " = ?", new String[]{String.valueOf(aId)});
+    }
+
+    public void delAll () {
+        mDb.delete(TABLE_NAME, null, null);
     }
 
     public void update (BPM aBpm) {
@@ -51,10 +55,6 @@ public class BPMDAO {
         Value.put(NAME, aBpm.getName ());
         Value.put(VALUE, aBpm.getBpm ());
         mDb.update(TABLE_NAME, Value, KEY  + " = ?", new String[] {String.valueOf(aBpm.getId())});
-    }
-
-    public void select (long aId) {
-        //Cursor c = mDb.rawQuery("select " + NAME + " from " + TABLE_NAME + " where salaire > ?", new String[]{"1"});
     }
 
     public Cursor getAllBPMs () {

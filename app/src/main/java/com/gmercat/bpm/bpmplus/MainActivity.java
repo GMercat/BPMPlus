@@ -22,7 +22,8 @@ import static java.lang.Math.*;
 public class MainActivity   extends Activity
                             implements  DialogNewElement.DialogNewElementListener,
                                         DialogSetElement.DialogSetElementListener,
-                                        DialogDeleteElement.DialogDeleteElementListener{
+                                        DialogDeleteElement.DialogDeleteElementListener,
+                                        DialogDeleteAllElement.DialogDeleteAllElementListener  {
 
     /// Members
     private ArrayList<BPM>  BPMList         = new ArrayList<> ();
@@ -138,18 +139,23 @@ public class MainActivity   extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // TODO options
+                return true;
+            case R.id.action_delete_all:
+                DialogDeleteAllElement newDialogDeleteAllElement = new DialogDeleteAllElement();
+                newDialogDeleteAllElement.show(getFragmentManager(), "deleteAllElement");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void onDialogNewElementPositiveClick(DialogNewElement dialog) {
-        String title = dialog.getTitle ();
-
-        Toast.makeText(this, title, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
-
         // Database
-        BPM NewBPM = new BPM (0, title, BPMValue);
+        BPM NewBPM = new BPM (0, dialog.getTitle (), BPMValue);
         int IdNewBPM = BPMDataAcces.add(NewBPM);
         NewBPM.setId (IdNewBPM);
 
@@ -161,11 +167,7 @@ public class MainActivity   extends Activity
     @Override
     public void onDialogSetElementPositiveClick(DialogSetElement dialog) {
         if (PositionElementSelected != -1) {
-            String title = dialog.getElementNameEdit();
-
-            Toast.makeText(this, title, Toast.LENGTH_SHORT).show(); // TODO reprendre le message
-
-            BPMList.get(PositionElementSelected).setName(title);
+            BPMList.get(PositionElementSelected).setName(dialog.getElementNameEdit());
             BPMDataAcces.update(BPMList.get(PositionElementSelected));
             BPMAdapter.notifyDataSetChanged();
 
@@ -182,6 +184,15 @@ public class MainActivity   extends Activity
 
             PositionElementSelected = -1;
         }
+    }
+
+    @Override
+    public void onDialogDeleteAllElementPositiveClick() {
+        BPMDataAcces.delAll();
+        BPMList.clear();
+        BPMAdapter.notifyDataSetChanged();
+
+        PositionElementSelected = -1;
     }
 
     private void resetBPMValue () {
