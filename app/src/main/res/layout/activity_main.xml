@@ -10,22 +10,21 @@
     android:layout_centerHorizontal="true"
     android:layout_alignParentTop="true"
     tools:context=".MainActivity"
-    android:background="#546e7a">
+    android:background="@drawable/application_background">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:padding="1dp"
-        android:background="#37474f">
+        android:background="@drawable/application_border">
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/listBPM"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:background="#90a4ae"
+            android:background="@drawable/list_background"
             android:paddingLeft="8dp"
             android:paddingRight="8dp" />
     </FrameLayout>
@@ -37,7 +36,7 @@
         android:layout_height="match_parent"
         android:id="@+id/bpm_text"
         android:layout_weight="2"
-        android:textColor="#eceff1" />
+        android:textColor="@drawable/text_BPM_foreground" />
 
     <LinearLayout
         android:orientation="horizontal"

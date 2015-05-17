@@ -9,7 +9,7 @@
         android:textAppearance="@style/BPMListStyle"
         android:singleLine="true"
         android:layout_weight="1"
-        android:textColor="#263238" />
+        android:textColor="@drawable/text_list_foreground" />
 
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +17,6 @@
         android:id="@+id/element_text_bpm"
         android:textAppearance="@style/BPMListStyle"
         android:singleLine="true"
-        android:textColor="#263238" />
+        android:textColor="@drawable/text_list_foreground" />
 
 </LinearLayout>
