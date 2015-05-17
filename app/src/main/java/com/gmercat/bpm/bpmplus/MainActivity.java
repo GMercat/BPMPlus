@@ -152,20 +152,24 @@ public class MainActivity   extends Activity
 
     @Override
     public void onDialogNewElementPositiveClick(DialogNewElement dialog) {
-        // Database
-        BPM NewBPM = new BPM (0, dialog.getElement(), BPMValue);
-        int IdNewBPM = BPMDataAcces.add(NewBPM);
-        NewBPM.setId (IdNewBPM);
+        String elementName = dialog.getElement();
+        if (!elementName.isEmpty()) {
+            // Database
+            BPM NewBPM = new BPM(0, elementName, BPMValue);
+            int IdNewBPM = BPMDataAcces.add(NewBPM);
+            NewBPM.setId(IdNewBPM);
 
-        BPMList.add(NewBPM);
+            BPMList.add(NewBPM);
 
-        resetBPMValue ();
+            resetBPMValue();
+        }
     }
 
     @Override
     public void onDialogSetElementPositiveClick(DialogSetElement dialog) {
-        if (PositionElementSelected != -1) {
-            BPMList.get(PositionElementSelected).setName(dialog.getElementNameEdit());
+        String elementName = dialog.getElementNameEdit();
+        if (!elementName.isEmpty() && (PositionElementSelected != -1)) {
+            BPMList.get(PositionElementSelected).setName(elementName);
             BPMDataAcces.update(BPMList.get(PositionElementSelected));
             BPMAdapter.notifyDataSetChanged();
 
