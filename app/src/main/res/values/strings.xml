@@ -11,7 +11,6 @@
     <string name="ok_button_text">Ok</string>
 
     <string name="add_element">New element</string>
-    <string name="set_element">Modif title</string>
     <string name="title_add_element">Add element</string>
     <string name="title_set_element">Rename element</string>
 </resources>

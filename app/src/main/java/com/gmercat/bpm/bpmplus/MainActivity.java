@@ -93,10 +93,6 @@ public class MainActivity   extends Activity
             BPMList.add(BPMElement);
         }
 
-        BPMAdapter = new BPMAdapter (this, BPMList);
-        bpmListView.setAdapter (BPMAdapter);
-        BPMAdapter.notifyDataSetChanged ();
-
         bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
                 PositionElementSelected = aPosition;
@@ -116,6 +112,10 @@ public class MainActivity   extends Activity
                 return true;
             }
         });
+
+        BPMAdapter = new BPMAdapter (this, BPMList);
+        bpmListView.setAdapter(BPMAdapter);
+        BPMAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -137,9 +137,10 @@ public class MainActivity   extends Activity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+            /* TODO Ajouter la possibilité de changer de langue et de style de l'application
             case R.id.action_settings:
-                // TODO options
                 return true;
+            */
             case R.id.action_delete_all:
                 DialogDeleteAllElement newDialogDeleteAllElement = new DialogDeleteAllElement();
                 newDialogDeleteAllElement.show(getFragmentManager(), "deleteAllElement");
