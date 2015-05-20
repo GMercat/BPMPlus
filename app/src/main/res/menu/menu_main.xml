@@ -5,6 +5,15 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
      -->
-    <item android:id="@+id/action_delete_all" android:title="@string/action_delete_all"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_shared_all"
+        android:icon="@drawable/ic_action_share_all"
+        android:title="@string/action_share_all"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_delete_all"
+          android:icon="@drawable/ic_action_delete_all"
+          android:title="@string/action_delete_all"
+          android:orderInCategory="100"
+          app:showAsAction="ifRoom" />
 </menu>
