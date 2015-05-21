@@ -107,7 +107,7 @@ public class MainActivity   extends Activity
         }
 
         bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
+            public void onItemClick(AdapterView aParentView, View aChildView, int aPosition, long aId) {
                 PositionElementSelected = aPosition;
                 if (PositionElementSelected != -1) {
                     DialogSetElement newDialogSetElement = new DialogSetElement();
@@ -131,7 +131,7 @@ public class MainActivity   extends Activity
         BPMAdapter.notifyDataSetChanged();
 
         // Set up an Intent to send back to apps that request a file
-        mRequestFileIntent = new Intent("com.gmercat.bpm.bpmplus.ACTION_RETURN_FILE");
+        mRequestFileIntent = new Intent(Intent.ACTION_SEND);
         setShareIntent(mRequestFileIntent);
     }
 
@@ -248,8 +248,10 @@ public class MainActivity   extends Activity
                 // Grant temporary read permission to the content URI
                 mRequestFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 // Put the Uri and MIME type in the result Intent
-                mRequestFileIntent.setDataAndType(fileUri, getContentResolver().getType(fileUri));
-                startActivity(mRequestFileIntent);
+                //mRequestFileIntent.setDataAndType(fileUri, getContentResolver().getType(fileUri));
+                mRequestFileIntent.setType("application/csv");
+                mRequestFileIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                startActivity(Intent.createChooser(mRequestFileIntent, getString(R.string.title_share)));
                 // Set the result
                 MainActivity.this.setResult(Activity.RESULT_OK, mRequestFileIntent);
             } else {
@@ -280,7 +282,7 @@ public class MainActivity   extends Activity
             requestFile.createNewFile();
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(requestFile)));
             for (BPM bpm : BPMList) {
-                writer.write(bpm.getName() + " " + bpm.getBpmStr());
+                writer.write(bpm.getName() + ";" + bpm.getBpmStr());
                 writer.newLine();
             }
         } catch (Exception e) {

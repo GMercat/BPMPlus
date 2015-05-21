@@ -3,6 +3,7 @@
 
     <string name="bpm">0</string>
     <string name="action_settings">Paramètres</string>
+    <string name="title_share">Partager via</string>
     <string name="action_share_all">Partager</string>
     <string name="action_delete_all">Tout supprimer</string>
     <string name="cancel_button_text">Annuler</string>
