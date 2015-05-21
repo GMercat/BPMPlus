@@ -1,16 +1,26 @@
 package com.gmercat.bpm.bpmplus;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import static java.lang.Math.*;
@@ -33,6 +43,9 @@ public class MainActivity   extends Activity
     private int     GapTime                 = 0;
     private int     BPMValue                = 0;
     private int     PositionElementSelected = -1;
+
+    private ShareActionProvider mShareActionProvider;
+    private Intent              mRequestFileIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +118,7 @@ public class MainActivity   extends Activity
         });
 
         bpmListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick (AdapterView aParentView, View aChildView, int aPosition, long aId) {
+            public boolean onItemLongClick(AdapterView aParentView, View aChildView, int aPosition, long aId) {
                 PositionElementSelected = aPosition;
                 DialogDeleteElement newDialogDeleteElement = new DialogDeleteElement();
                 newDialogDeleteElement.show(getFragmentManager(), "deleteElement");
@@ -116,6 +129,10 @@ public class MainActivity   extends Activity
         BPMAdapter = new BPMAdapter (this, BPMList);
         bpmListView.setAdapter(BPMAdapter);
         BPMAdapter.notifyDataSetChanged();
+
+        // Set up an Intent to send back to apps that request a file
+        mRequestFileIntent = new Intent("com.gmercat.bpm.bpmplus.ACTION_RETURN_FILE");
+        setShareIntent(mRequestFileIntent);
     }
 
     @Override
@@ -128,7 +145,20 @@ public class MainActivity   extends Activity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.action_share_all);
+
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+
         return true;
+    }
+
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     @Override
@@ -137,10 +167,11 @@ public class MainActivity   extends Activity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            /* TODO Ajouter la possibilité de changer de langue et de style de l'application
-            case R.id.action_settings:
+
+            case R.id.action_share_all:
+                onShareList();
                 return true;
-            */
+
             case R.id.action_delete_all:
                 DialogDeleteAllElement newDialogDeleteAllElement = new DialogDeleteAllElement();
                 newDialogDeleteAllElement.show(getFragmentManager(), "deleteAllElement");
@@ -204,5 +235,65 @@ public class MainActivity   extends Activity
         BPMValue = 0;
 
         BPMText.setText(String.valueOf(BPMValue));
+    }
+
+    private void onShareList () {
+        File requestFile = buildFile();
+
+        // Most file-related method calls need to be in try-catch blocks.
+        // Use the FileProvider to get a content URI
+        try {
+            Uri fileUri = FileProvider.getUriForFile(MainActivity.this, "com.gmercat.bpm.bpmplus", requestFile);
+            if (fileUri != null) {
+                // Grant temporary read permission to the content URI
+                mRequestFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                // Put the Uri and MIME type in the result Intent
+                mRequestFileIntent.setDataAndType(fileUri, getContentResolver().getType(fileUri));
+                startActivity(mRequestFileIntent);
+                // Set the result
+                MainActivity.this.setResult(Activity.RESULT_OK, mRequestFileIntent);
+            } else {
+                mRequestFileIntent.setDataAndType(null, "");
+                MainActivity.this.setResult(RESULT_CANCELED, mRequestFileIntent);
+            }
+        } catch (IllegalArgumentException e) {
+            Log.e("File Selector", "The selected file can't be shared: " + requestFile.getName());
+        }
+    }
+
+    private File buildFile() {
+        String fileName = "MyList.csv";
+
+        BufferedWriter writer = null;
+        // Get the files/ subdirectory of internal storage
+        File privateRootDir = getFilesDir();
+        // Get the files/lists subdirectory;
+        File listsDir = new File(privateRootDir, "lists");
+        File requestFile = new File(listsDir, fileName);
+        try {
+            if (!listsDir.exists()) {
+                listsDir.mkdir();
+            }
+            if (requestFile.exists()) {
+                requestFile.delete();
+            }
+            requestFile.createNewFile();
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(requestFile)));
+            for (BPM bpm : BPMList) {
+                writer.write(bpm.getName() + " " + bpm.getBpmStr());
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return requestFile;
     }
 }
