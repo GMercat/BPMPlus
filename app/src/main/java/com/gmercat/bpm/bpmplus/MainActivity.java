@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import java.io.BufferedWriter;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 
-public class MainActivity   extends Activity
+public class MainActivity   extends ActionBarActivity
                             implements  DialogNewElement.DialogNewElementListener,
                                         DialogSetElement.DialogSetElementListener,
                                         DialogDeleteElement.DialogDeleteElementListener,
@@ -45,7 +47,6 @@ public class MainActivity   extends Activity
     private int     PositionElementSelected = -1;
 
     private ShareActionProvider mShareActionProvider;
-    private Intent              mRequestFileIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,10 +130,6 @@ public class MainActivity   extends Activity
         BPMAdapter = new BPMAdapter (this, BPMList);
         bpmListView.setAdapter(BPMAdapter);
         BPMAdapter.notifyDataSetChanged();
-
-        // Set up an Intent to send back to apps that request a file
-        mRequestFileIntent = new Intent(Intent.ACTION_SEND);
-        setShareIntent(mRequestFileIntent);
     }
 
     @Override
@@ -150,7 +147,7 @@ public class MainActivity   extends Activity
         MenuItem item = menu.findItem(R.id.action_share_all);
 
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
         return true;
     }
@@ -244,19 +241,23 @@ public class MainActivity   extends Activity
         // Use the FileProvider to get a content URI
         try {
             Uri fileUri = FileProvider.getUriForFile(MainActivity.this, "com.gmercat.bpm.bpmplus", requestFile);
+            // Set up an Intent to send back to apps that request a file
+            Intent requestFileIntent = new Intent(Intent.ACTION_SEND);
             if (fileUri != null) {
+                setShareIntent(requestFileIntent);
                 // Grant temporary read permission to the content URI
-                mRequestFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                // Put the Uri and MIME type in the result Intent
-                //mRequestFileIntent.setDataAndType(fileUri, getContentResolver().getType(fileUri));
-                mRequestFileIntent.setType("application/csv");
-                mRequestFileIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-                startActivity(Intent.createChooser(mRequestFileIntent, getString(R.string.title_share)));
+                requestFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                requestFileIntent.setType("application/csv");
+                requestFileIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                startActivity(Intent.createChooser(requestFileIntent, getString(R.string.title_share)));
+
                 // Set the result
-                MainActivity.this.setResult(Activity.RESULT_OK, mRequestFileIntent);
+                MainActivity.this.setResult(Activity.RESULT_OK, requestFileIntent);
             } else {
-                mRequestFileIntent.setDataAndType(null, "");
-                MainActivity.this.setResult(RESULT_CANCELED, mRequestFileIntent);
+                requestFileIntent.setDataAndType(null, "");
+
+                // Set the result
+                MainActivity.this.setResult(RESULT_CANCELED, requestFileIntent);
             }
         } catch (IllegalArgumentException e) {
             Log.e("File Selector", "The selected file can't be shared: " + requestFile.getName());
@@ -264,7 +265,7 @@ public class MainActivity   extends Activity
     }
 
     private File buildFile() {
-        String fileName = "MyList.csv";
+        String fileName = "BPMList.csv";
 
         BufferedWriter writer = null;
         // Get the files/ subdirectory of internal storage
