@@ -1,9 +1,11 @@
-package com.gmercat.bpm.bpmplus;
+package com.gmercat.bpm.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.gmercat.bpm.bpmplus.BPM;
 
 public class BPMDAO {
     public static final String TABLE_NAME   = "bpms";

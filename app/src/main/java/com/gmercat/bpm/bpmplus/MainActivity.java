@@ -18,6 +18,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gmercat.bpm.DAO.BPMAdapter;
+import com.gmercat.bpm.DAO.BPMDAO;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,8 +40,8 @@ public class MainActivity   extends ActionBarActivity
     /// Members
     private ArrayList<BPM>  BPMList         = new ArrayList<> ();
     private TextView        BPMText         = null;
-    private BPMDAO          BPMDataAcces    = null;
-    private BPMAdapter      BPMAdapter      = null;
+    private BPMDAO BPMDataAcces    = null;
+    private com.gmercat.bpm.DAO.BPMAdapter BPMAdapter      = null;
 
     private long    LastCurrentTime         = 0;
     private int     NbGap                   = -1;

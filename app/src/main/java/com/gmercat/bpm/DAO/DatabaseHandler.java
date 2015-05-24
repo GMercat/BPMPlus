@@ -1,4 +1,4 @@
-package com.gmercat.bpm.bpmplus;
+package com.gmercat.bpm.DAO;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

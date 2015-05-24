@@ -1,4 +1,4 @@
-package com.gmercat.bpm.bpmplus;
+package com.gmercat.bpm.DAO;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.gmercat.bpm.bpmplus.BPM;
+import com.gmercat.bpm.bpmplus.R;
 
 import java.util.ArrayList;
 
