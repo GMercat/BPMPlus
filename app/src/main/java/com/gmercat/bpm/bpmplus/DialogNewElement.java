@@ -17,18 +17,18 @@ public class DialogNewElement extends DialogFragment{
     }
 
     /// Members
-    DialogNewElementListener    listener;
-    EditText element;
+    DialogNewElementListener mListener;
+    EditText mElement;
 
     public String getElement() {
-        return element.getText().toString();
+        return mElement.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new, null);
-        element = (EditText) view.findViewById(R.id.add_element);
+        mElement = (EditText) view.findViewById(R.id.add_element);
 
         builder.setTitle(R.string.title_add_element);
 
@@ -43,7 +43,7 @@ public class DialogNewElement extends DialogFragment{
             .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onDialogNewElementPositiveClick(DialogNewElement.this);
+                    mListener.onDialogNewElementPositiveClick(DialogNewElement.this);
                 }
             });
 
@@ -54,7 +54,7 @@ public class DialogNewElement extends DialogFragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (DialogNewElementListener)activity;
+            mListener = (DialogNewElementListener)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement DialogNewElementListener");
         }

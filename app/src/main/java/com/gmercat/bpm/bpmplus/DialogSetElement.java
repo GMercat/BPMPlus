@@ -18,24 +18,24 @@ public class DialogSetElement extends DialogFragment{
     }
 
     /// Members
-    DialogSetElementListener    listener;
-    EditText                    ElementNameEdit;
-    String                      ElementName;
+    DialogSetElementListener    mListener;
+    EditText                    mElementNameEdit;
+    String                      mElementName;
 
-    public void setElementName (String aElementName) {
-        ElementName = aElementName;
+    public void setElementName(String aElementName) {
+        mElementName = aElementName;
     }
 
     public String getElementNameEdit() {
-        return ElementNameEdit.getText().toString();
+        return mElementNameEdit.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_set, null);
-        ElementNameEdit = (EditText) view.findViewById(R.id.set_element);
-        ElementNameEdit.setText(ElementName, TextView.BufferType.EDITABLE);
+        mElementNameEdit = (EditText) view.findViewById(R.id.set_element);
+        mElementNameEdit.setText(mElementName, TextView.BufferType.EDITABLE);
 
         builder.setTitle(R.string.title_set_element);
 
@@ -50,7 +50,7 @@ public class DialogSetElement extends DialogFragment{
             .setPositiveButton(R.string.ok_button_text, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onDialogSetElementPositiveClick(DialogSetElement.this);
+                    mListener.onDialogSetElementPositiveClick(DialogSetElement.this);
                 }
             });
 
@@ -61,7 +61,7 @@ public class DialogSetElement extends DialogFragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (DialogSetElementListener)activity;
+            mListener = (DialogSetElementListener)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement DialogNewElementListener");
         }

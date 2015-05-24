@@ -14,7 +14,7 @@ public class DialogDeleteAllElement extends DialogFragment{
     }
 
     /// Members
-    DialogDeleteAllElementListener listener;
+    DialogDeleteAllElementListener mListener;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -30,7 +30,7 @@ public class DialogDeleteAllElement extends DialogFragment{
             .setPositiveButton(R.string.delete_button_text, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onDialogDeleteAllElementPositiveClick();
+                    mListener.onDialogDeleteAllElementPositiveClick();
                 }
             });
 
@@ -41,7 +41,7 @@ public class DialogDeleteAllElement extends DialogFragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            listener = (DialogDeleteAllElementListener)activity;
+            mListener = (DialogDeleteAllElementListener)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement DialogDeleteAllElementListener");
         }
