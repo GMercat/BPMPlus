@@ -38,10 +38,10 @@ public class BPMDAO {
     }
 
     public int add (BPM aBpm) {
-        ContentValues Value = new ContentValues ();
-        Value.put(NAME, aBpm.getName ());
-        Value.put(VALUE, aBpm.getBpm());
-        return (int)mDb.insert(TABLE_NAME, null, Value);
+        ContentValues value = new ContentValues ();
+        value.put(NAME, aBpm.getName ());
+        value.put(VALUE, aBpm.getBpm());
+        return (int)mDb.insert(TABLE_NAME, null, value);
     }
 
     public void del (long aId) {
@@ -53,10 +53,10 @@ public class BPMDAO {
     }
 
     public void update (BPM aBpm) {
-        ContentValues Value = new ContentValues ();
-        Value.put(NAME, aBpm.getName ());
-        Value.put(VALUE, aBpm.getBpm ());
-        mDb.update(TABLE_NAME, Value, KEY  + " = ?", new String[] {String.valueOf(aBpm.getId())});
+        ContentValues value = new ContentValues ();
+        value.put(NAME, aBpm.getName ());
+        value.put(VALUE, aBpm.getBpm ());
+        mDb.update(TABLE_NAME, value, KEY  + " = ?", new String[] {String.valueOf(aBpm.getId())});
     }
 
     public Cursor getAllBPMs () {
