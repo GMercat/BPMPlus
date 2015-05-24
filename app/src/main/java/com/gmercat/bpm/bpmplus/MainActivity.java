@@ -38,16 +38,16 @@ public class MainActivity   extends ActionBarActivity
                                         DialogDeleteAllElement.DialogDeleteAllElementListener  {
 
     /// Members
-    private ArrayList<BPM>  BPMList         = new ArrayList<> ();
-    private TextView        BPMText         = null;
-    private BPMDAO BPMDataAcces    = null;
-    private com.gmercat.bpm.DAO.BPMAdapter BPMAdapter      = null;
+    private ArrayList<BPM>  mBPMList        = new ArrayList<>();
+    private TextView        mBPMText        = null;
+    private BPMDAO          mBPMDataAcces   = null;
+    private BPMAdapter      mBPMAdapter     = null;
 
-    private long    LastCurrentTime         = 0;
-    private int     NbGap                   = -1;
-    private int     GapTime                 = 0;
-    private int     BPMValue                = 0;
-    private int     PositionElementSelected = -1;
+    private long    mLastCurrentTime            = 0;
+    private int     mNbGap                      = -1;
+    private int     mGapTime                    = 0;
+    private int     mBPMValue                   = 0;
+    private int     mPositionElementSelected    = -1;
 
     private ShareActionProvider mShareActionProvider;
 
@@ -59,36 +59,35 @@ public class MainActivity   extends ActionBarActivity
         ListView bpmListView = (ListView) findViewById(R.id.listBPM);
         bpmListView.setVisibility(View.VISIBLE);
 
-        BPMText = (TextView)findViewById(R.id.bpm_text);
-        BPMText.setText (String.valueOf (BPMValue));
+        mBPMText = (TextView)findViewById(R.id.bpm_text);
+        mBPMText.setText(String.valueOf(mBPMValue));
 
         ImageButton bpmButton = (ImageButton)findViewById(R.id.bpm_button);
         bpmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long CurrentTime = System.currentTimeMillis();
+                long currentTime = System.currentTimeMillis();
+                ++mNbGap;
+                if (0 != mNbGap) {
+                    mGapTime += currentTime - mLastCurrentTime;
+                    float meanGap = (float) mGapTime / (float) mNbGap;
 
-                ++NbGap;
-                if (0 != NbGap) {
-                    GapTime += CurrentTime - LastCurrentTime;
-                    float MeanGap = (float) GapTime / (float) NbGap;
-
-                    BPMValue = (int) ceil(60000.0 / MeanGap);
-                    BPMText.setText(String.valueOf(BPMValue));
+                    mBPMValue = (int) ceil(60000.0 / meanGap);
+                    mBPMText.setText(String.valueOf(mBPMValue));
                 }
-                LastCurrentTime = CurrentTime;
+                mLastCurrentTime = currentTime;
             }
         });
 
-        ImageButton resetButton =  (ImageButton)findViewById(R.id.reset_button);
+        ImageButton resetButton = (ImageButton)findViewById(R.id.reset_button);
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetBPMValue ();
+                resetBPMValue();
             }
         });
 
-        ImageButton saveButton =  (ImageButton)findViewById(R.id.save_button);
+        ImageButton saveButton = (ImageButton)findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,25 +96,25 @@ public class MainActivity   extends ActionBarActivity
             }
         });
 
-        BPMDataAcces = new BPMDAO (this);
-        BPMDataAcces.open();
-        Cursor BPMCursor = BPMDataAcces.getAllBPMs ();
+        mBPMDataAcces = new BPMDAO(this);
+        mBPMDataAcces.open();
+        Cursor bpmCursor = mBPMDataAcces.getAllBPMs();
 
-        while (BPMCursor.moveToNext()) {
-            int    id       = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.KEY));
-            String title    = BPMCursor.getString(BPMCursor.getColumnIndex(BPMDAO.NAME));
-            int    bpmValue = BPMCursor.getInt(BPMCursor.getColumnIndex(BPMDAO.VALUE));
+        while (bpmCursor.moveToNext()) {
+            int    id       = bpmCursor.getInt(bpmCursor.getColumnIndex(BPMDAO.KEY));
+            String title    = bpmCursor.getString(bpmCursor.getColumnIndex(BPMDAO.NAME));
+            int    bpmValue = bpmCursor.getInt(bpmCursor.getColumnIndex(BPMDAO.VALUE));
 
-            BPM BPMElement = new BPM (id, title, bpmValue);
-            BPMList.add(BPMElement);
+            BPM bpmElement = new BPM(id, title, bpmValue);
+            mBPMList.add(bpmElement);
         }
 
         bpmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView aParentView, View aChildView, int aPosition, long aId) {
-                PositionElementSelected = aPosition;
-                if (PositionElementSelected != -1) {
+                mPositionElementSelected = aPosition;
+                if (mPositionElementSelected != -1) {
                     DialogSetElement newDialogSetElement = new DialogSetElement();
-                    newDialogSetElement.setElementName(BPMList.get(PositionElementSelected).getName());
+                    newDialogSetElement.setElementName(mBPMList.get(mPositionElementSelected).getName());
                     newDialogSetElement.show(getFragmentManager(), "setElement");
                 }
             }
@@ -123,50 +122,50 @@ public class MainActivity   extends ActionBarActivity
 
         bpmListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView aParentView, View aChildView, int aPosition, long aId) {
-                PositionElementSelected = aPosition;
+                mPositionElementSelected = aPosition;
                 DialogDeleteElement newDialogDeleteElement = new DialogDeleteElement();
                 newDialogDeleteElement.show(getFragmentManager(), "deleteElement");
                 return true;
             }
         });
 
-        BPMAdapter = new BPMAdapter (this, BPMList);
-        bpmListView.setAdapter(BPMAdapter);
-        BPMAdapter.notifyDataSetChanged();
+        mBPMAdapter = new BPMAdapter(this, mBPMList);
+        bpmListView.setAdapter(mBPMAdapter);
+        mBPMAdapter.notifyDataSetChanged();
     }
 
     @Override
-    protected void onDestroy () {
-        super.onDestroy ();
-        BPMDataAcces.close ();
+    protected void onDestroy() {
+        super.onDestroy();
+        mBPMDataAcces.close();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu aMenu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, aMenu);
 
         // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share_all);
+        MenuItem menuItem = aMenu.findItem(R.id.action_share_all);
 
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
 
         return true;
     }
 
-    private void setShareIntent(Intent shareIntent) {
+    private void setShareIntent(Intent aShareIntent) {
         if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(shareIntent);
+            mShareActionProvider.setShareIntent(aShareIntent);
         }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem aMenuItem) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
+        switch (aMenuItem.getItemId()) {
 
             case R.id.action_share_all:
                 onShareList();
@@ -177,7 +176,7 @@ public class MainActivity   extends ActionBarActivity
                 newDialogDeleteAllElement.show(getFragmentManager(), "deleteAllElement");
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(aMenuItem);
         }
     }
 
@@ -186,58 +185,58 @@ public class MainActivity   extends ActionBarActivity
         String elementName = dialog.getElement();
         if (!elementName.isEmpty()) {
             // Database
-            BPM NewBPM = new BPM(0, elementName, BPMValue);
-            int IdNewBPM = BPMDataAcces.add(NewBPM);
-            NewBPM.setId(IdNewBPM);
+            BPM newBPM = new BPM(0, elementName, mBPMValue);
+            int idNewBPM = mBPMDataAcces.add(newBPM);
+            newBPM.setId(idNewBPM);
 
-            BPMList.add(NewBPM);
+            mBPMList.add(newBPM);
 
             resetBPMValue();
         }
     }
 
     @Override
-    public void onDialogSetElementPositiveClick(DialogSetElement dialog) {
-        String elementName = dialog.getElementNameEdit();
-        if (!elementName.isEmpty() && (PositionElementSelected != -1)) {
-            BPMList.get(PositionElementSelected).setName(elementName);
-            BPMDataAcces.update(BPMList.get(PositionElementSelected));
-            BPMAdapter.notifyDataSetChanged();
+    public void onDialogSetElementPositiveClick(DialogSetElement aDialog) {
+        String elementName = aDialog.getElementNameEdit();
+        if (!elementName.isEmpty() && (mPositionElementSelected != -1)) {
+            mBPMList.get(mPositionElementSelected).setName(elementName);
+            mBPMDataAcces.update(mBPMList.get(mPositionElementSelected));
+            mBPMAdapter.notifyDataSetChanged();
 
-            PositionElementSelected = -1;
+            mPositionElementSelected = -1;
         }
     }
 
     @Override
     public void onDialogDeleteElementPositiveClick() {
-        if (PositionElementSelected != -1) {
-            BPMDataAcces.del(BPMList.get(PositionElementSelected).getId());
-            BPMList.remove(PositionElementSelected);
-            BPMAdapter.notifyDataSetChanged();
+        if (mPositionElementSelected != -1) {
+            mBPMDataAcces.del(mBPMList.get(mPositionElementSelected).getId());
+            mBPMList.remove(mPositionElementSelected);
+            mBPMAdapter.notifyDataSetChanged();
 
-            PositionElementSelected = -1;
+            mPositionElementSelected = -1;
         }
     }
 
     @Override
     public void onDialogDeleteAllElementPositiveClick() {
-        BPMDataAcces.delAll();
-        BPMList.clear();
-        BPMAdapter.notifyDataSetChanged();
+        mBPMDataAcces.delAll();
+        mBPMList.clear();
+        mBPMAdapter.notifyDataSetChanged();
 
-        PositionElementSelected = -1;
+        mPositionElementSelected = -1;
     }
 
-    private void resetBPMValue () {
-        LastCurrentTime = 0;
-        NbGap = -1;
-        GapTime = 0;
-        BPMValue = 0;
+    private void resetBPMValue() {
+        mLastCurrentTime = 0;
+        mNbGap = -1;
+        mGapTime = 0;
+        mBPMValue = 0;
 
-        BPMText.setText(String.valueOf(BPMValue));
+        mBPMText.setText(String.valueOf(mBPMValue));
     }
 
-    private void onShareList () {
+    private void onShareList() {
         File requestFile = buildFile();
 
         // Most file-related method calls need to be in try-catch blocks.
@@ -285,7 +284,7 @@ public class MainActivity   extends ActionBarActivity
             }
             requestFile.createNewFile();
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(requestFile)));
-            for (BPM bpm : BPMList) {
+            for (BPM bpm : mBPMList) {
                 writer.write(bpm.getName() + ";" + bpm.getBpmStr());
                 writer.newLine();
             }
