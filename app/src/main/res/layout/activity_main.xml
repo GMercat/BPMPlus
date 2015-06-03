@@ -21,6 +21,11 @@
         android:layout_marginTop="@dimen/activity_top_margin"
         android:layout_weight="1" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/separator_view"/>
+
     <TextView android:text="@string/bpm"
         android:textAppearance="@style/BPMStyle"
         android:gravity="center"

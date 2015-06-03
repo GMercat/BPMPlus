@@ -39,4 +39,5 @@
     <drawable name="list_background">#ffffff</drawable>
     <drawable name="text_BPM_foreground">#000000</drawable>
     <drawable name="text_list_foreground">#000000</drawable>
+    <drawable name="separator_view">#dddddd</drawable>
 </resources>
