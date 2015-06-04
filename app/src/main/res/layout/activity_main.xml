@@ -26,29 +26,20 @@
         android:layout_height="1dp"
         android:background="@drawable/separator_view"/>
 
-    <TextView android:text="@string/bpm"
-        android:textAppearance="@style/BPMStyle"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/bpm_text"
-        android:layout_weight="2"
-        android:textColor="@drawable/text_BPM_foreground" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
 
-        <ImageButton
+        <TextView android:text="@string/bpm"
+            android:textAppearance="@style/BPMStyle"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/reset_button"
+            android:layout_height="match_parent"
+            android:id="@+id/bpm_text"
             android:layout_weight="2"
-            android:src="@drawable/reset_button"
-            android:scaleType="fitCenter"
-            android:background="#00ffffff" />
+            android:textColor="@drawable/text_BPM_foreground" />
 
         <ImageButton
             android:layout_width="match_parent"
@@ -59,14 +50,43 @@
             android:scaleType="fitCenter"
             android:background="#00ffffff" />
 
-        <ImageButton
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="end">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reset_button"
+            android:text="@string/reset_button_text"
+            android:src="@drawable/reset_button"
+            android:scaleType="fitCenter"
+            android:background="#00ffffff"
+            android:enabled="true"
+            android:clickable="false"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/save_button"
-            android:layout_weight="2"
+            android:text="@string/save_button_text"
             android:src="@drawable/save_button"
             android:scaleType="fitCenter"
-            android:background="#00ffffff" />
+            android:background="#00ffffff"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            style="?android:attr/borderlessButtonStyle" />
     </LinearLayout>
 
 </LinearLayout>

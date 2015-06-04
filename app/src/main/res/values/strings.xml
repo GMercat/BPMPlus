@@ -8,6 +8,8 @@
     <string name="action_delete_all">Delete all</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="delete_button_text">Delete</string>
+    <string name="reset_button_text">Reset</string>
+    <string name="save_button_text">Save</string>
     <string name="delete_text">Delete this element ?</string>
     <string name="delete_all_text">Delete all elements ?</string>
     <string name="ok_button_text">Ok</string>

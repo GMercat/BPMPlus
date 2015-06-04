@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -79,7 +80,7 @@ public class MainActivity   extends ActionBarActivity
             }
         });
 
-        ImageButton resetButton = (ImageButton)findViewById(R.id.reset_button);
+        Button resetButton = (Button)findViewById(R.id.reset_button);
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +88,7 @@ public class MainActivity   extends ActionBarActivity
             }
         });
 
-        ImageButton saveButton = (ImageButton)findViewById(R.id.save_button);
+        Button saveButton = (Button)findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
