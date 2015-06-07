@@ -6,11 +6,13 @@
 
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:icon">@android:color/transparent</item>
     </style>
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:height">@dimen/bar_height</item>
 
         <!-- Support library compatibility -->
         <item name="background">@drawable/actionbar_background</item>
@@ -31,11 +33,11 @@
         <item name="android:textSize">@dimen/EditDialogSize</item>
     </style>
 
-    <drawable name="actionbar_background">#263238</drawable>
+    <drawable name="actionbar_background">#2196f3</drawable>
     <drawable name="actionbar_menu_background">#455a64</drawable>
-    <drawable name="application_background">#546e7a</drawable>
-    <drawable name="application_border">#37474f</drawable>
-    <drawable name="list_background">#90a4ae</drawable>
-    <drawable name="text_BPM_foreground">#eceff1</drawable>
-    <drawable name="text_list_foreground">#263238</drawable>
+    <drawable name="application_background">#ffffff</drawable>
+    <drawable name="list_background">#ffffff</drawable>
+    <drawable name="text_BPM_foreground">#000000</drawable>
+    <drawable name="text_list_foreground">#000000</drawable>
+    <drawable name="separator_view">#dddddd</drawable>
 </resources>

@@ -12,22 +12,19 @@
     tools:context=".MainActivity"
     android:background="@drawable/application_background">
 
-    <FrameLayout
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:padding="1dp"
-        android:background="@drawable/application_border">
+        android:id="@+id/listBPM"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/list_background"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:layout_weight="1" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listBPM"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/list_background"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp" />
-    </FrameLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/separator_view"/>
 
     <TextView android:text="@string/bpm"
         android:textAppearance="@style/BPMStyle"
