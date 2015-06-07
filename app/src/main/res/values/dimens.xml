@@ -2,11 +2,21 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="activity_vertical_margin">0dp</dimen>
-    <dimen name="activity_top_margin">8dp</dimen>
+    <dimen name="activity_top_margin">4dp</dimen>
+    <dimen name="activity_bottom_margin">0dp</dimen>
 
     <dimen name="bar_height">56dp</dimen>
 
     <dimen name="BPMTextSize">64dp</dimen>
-    <dimen name="ElementTextSize">16sp</dimen>
+
+    <dimen name="element_list_height">40dp</dimen>
+    <dimen name="element_list_top_padding">4dp</dimen>
+    <dimen name="element_list_bottom_padding">4dp</dimen>
+    <dimen name="element_list_horizontal_padding">8dp</dimen>
+
+    <dimen name="TitleTextSize">16sp</dimen>
+    <dimen name="ArtistTextSize">16sp</dimen>
+
+    <dimen name="BPMElementTextSize">24sp</dimen>
     <dimen name="EditDialogSize">20dp</dimen>
 </resources>

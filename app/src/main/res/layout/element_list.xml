@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="fill_parent">
 
-    <TextView android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:id="@+id/element_title_text"
-        android:textAppearance="@style/BPMListStyle"
-        android:singleLine="true"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/element_list_height"
+        android:paddingLeft="@dimen/element_list_horizontal_padding"
+        android:paddingTop="@dimen/element_list_top_padding"
+        android:paddingRight="@dimen/element_list_horizontal_padding"
+        android:paddingBottom="@dimen/element_list_bottom_padding"
         android:layout_weight="4"
-        android:textColor="@drawable/text_list_foreground"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp" />
+        android:gravity="center_vertical">
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/element_title_text"
+            android:textAppearance="@style/BPMListTitleStyle"
+            android:singleLine="true"
+            android:text="Mon titre" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/element_artist_text"
+            android:textAppearance="@style/BPMListArtistStyle"
+            android:singleLine="true"
+            android:text=" - Mon artiste" />
+    </LinearLayout>
 
     <TextView android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/element_list_height"
         android:id="@+id/element_text_bpm"
-        android:textAppearance="@style/BPMListStyle"
+        android:textAppearance="@style/BPMListElementStyle"
         android:singleLine="true"
         android:layout_weight="1"
-        android:textColor="@drawable/text_list_foreground"
-        android:paddingTop="16dp"
+        android:textColor="@drawable/text_list_element_title_bpm_foreground"
         android:text="999"
-        android:paddingRight="16dp"
-        android:gravity="right" />
+        android:gravity="center" />
 
 </LinearLayout>

@@ -24,8 +24,17 @@
     </style>
 
     <!-- Element BPMList Text Style -->
-    <style name="BPMListStyle" parent="@android:style/TextAppearance" >
-        <item name="android:textSize">@dimen/ElementTextSize</item>
+    <style name="BPMListTitleStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/TitleTextSize</item>
+        <item name="android:textColor">@drawable/text_list_element_title_bpm_foreground</item>
+    </style>
+    <style name="BPMListArtistStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/ArtistTextSize</item>
+        <item name="android:textColor">@drawable/text_list_element_artist_foreground</item>
+    </style>
+
+    <style name="BPMListElementStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/BPMElementTextSize</item>
     </style>
 
     <!-- Edit Dialog Text Style -->
@@ -33,11 +42,11 @@
         <item name="android:textSize">@dimen/EditDialogSize</item>
     </style>
 
-    <drawable name="actionbar_background">#2196f3</drawable>
-    <drawable name="actionbar_menu_background">#455a64</drawable>
+    <drawable name="actionbar_background">#1e88e5</drawable>
     <drawable name="application_background">#ffffff</drawable>
     <drawable name="list_background">#ffffff</drawable>
-    <drawable name="text_BPM_foreground">#000000</drawable>
-    <drawable name="text_list_foreground">#000000</drawable>
+    <drawable name="text_BPM_foreground">#1f1f1f</drawable>
+    <drawable name="text_list_element_title_bpm_foreground">#1f1f1f</drawable>
+    <drawable name="text_list_element_artist_foreground">#727272</drawable>
     <drawable name="separator_view">#dddddd</drawable>
 </resources>

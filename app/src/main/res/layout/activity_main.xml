@@ -19,7 +19,8 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/list_background"
         android:layout_marginTop="@dimen/activity_top_margin"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/activity_bottom_margin" />
 
     <View
         android:layout_width="fill_parent"
