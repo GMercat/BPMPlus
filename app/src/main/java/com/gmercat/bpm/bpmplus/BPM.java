@@ -3,40 +3,51 @@ package com.gmercat.bpm.bpmplus;
 public class BPM {
     /// Members
     private long    mId;
-    private String  mName;
+    private String  mTitle;
+    private String  mArtist;
     private int     mBpm;
 
-    public BPM (int aId, String aName, int aBpm) {
-        super ();
+    public BPM(int aId, String aName, String aArtist, int aBpm) {
+        super();
         mId     = aId;
-        mName   = aName;
+        mTitle  = aName;
+        mArtist = aArtist;
         mBpm    = aBpm;
     }
 
-    public long getId () {
+    public long getId() {
         return mId;
     }
 
-    public void setId (long aId) {
+    public void setId(long aId) {
         mId = aId;
     }
 
-    public String getName () {
-        return mName;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public void setName (String aName) {
-        mName = aName;
+    public String getArtist() {
+        return mArtist;
     }
 
-    public int getBpm () {
+    public void setTitle(String aTitle) {
+        mTitle = aTitle;
+    }
+
+    public void setArtist(String aArtist) {
+        mArtist = aArtist;
+    }
+
+    public int getBpm() {
         return mBpm;
     }
-    public String getBpmStr () {
+
+    public String getBpmStr() {
         return String.valueOf (mBpm);
     }
 
-    public void setBpm (int aBpm) {
+    public void setBpm(int aBpm) {
         mBpm = aBpm;
     }
 }

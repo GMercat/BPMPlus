@@ -6,10 +6,20 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:hint="@string/add_element"
+        android:hint="@string/add_title"
         android:layout_weight="1"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/add_element"
+        android:id="@+id/add_title"
+        android:textAppearance="@style/EditDialogStyle" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:hint="@string/add_artist"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:id="@+id/add_artist"
         android:textAppearance="@style/EditDialogStyle" />
 </LinearLayout>

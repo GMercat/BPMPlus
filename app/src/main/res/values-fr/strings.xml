@@ -12,7 +12,8 @@
     <string name="delete_all_text">Supprimer tous les éléments ?</string>
     <string name="ok_button_text">Ok</string>
 
-    <string name="add_element">Nouvel élément</string>
+    <string name="add_title">Titre</string>
+    <string name="add_artist">Artiste</string>
     <string name="title_add_element">Ajouter un element</string>
     <string name="title_set_element">Renommer l\'element</string>
 </resources>

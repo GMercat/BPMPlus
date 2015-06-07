@@ -16,7 +16,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase aDb, int aOldVersion, int aNewVersion) {
-        aDb.execSQL(BPMDAO.TABLE_DROP);
-        onCreate(aDb);
+        if (aOldVersion != aNewVersion) {
+            if ((aOldVersion == 1) && (aNewVersion == 2)) {
+                aDb.execSQL(BPMDAO.TABLE_MIGRATION_1_2_ADD_TITLE);
+                aDb.execSQL(BPMDAO.TABLE_MIGRATION_1_2_COPY_NAME_TITLE);
+                aDb.execSQL(BPMDAO.TABLE_MIGRATION_1_2_ADD_ARTIST);
+            }
+        } else {
+            aDb.execSQL(BPMDAO.TABLE_DROP);
+            onCreate(aDb);
+        }
     }
 }

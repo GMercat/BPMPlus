@@ -12,7 +12,8 @@
     <string name="delete_all_text">Delete all elements ?</string>
     <string name="ok_button_text">Ok</string>
 
-    <string name="add_element">New element</string>
+    <string name="add_title">Title</string>
+    <string name="add_artist">Artist</string>
     <string name="title_add_element">Add element</string>
     <string name="title_set_element">Rename element</string>
 </resources>

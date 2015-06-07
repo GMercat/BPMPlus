@@ -18,17 +18,23 @@ public class DialogNewElement extends DialogFragment{
 
     /// Members
     DialogNewElementListener mListener;
-    EditText mElement;
+    EditText mTitle;
+    EditText mArtist;
 
-    public String getElement() {
-        return mElement.getText().toString();
+    public String getTitle() {
+        return mTitle.getText().toString();
+    }
+
+    public String getArtist() {
+        return mArtist.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_new, null);
-        mElement = (EditText) view.findViewById(R.id.add_element);
+        mTitle = (EditText) view.findViewById(R.id.add_title);
+        mArtist = (EditText) view.findViewById(R.id.add_artist);
 
         builder.setTitle(R.string.title_add_element);
 

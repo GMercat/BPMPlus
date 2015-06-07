@@ -46,11 +46,15 @@ public class BPMAdapter extends BaseAdapter{
         }
 
         TextView title = (TextView)view.findViewById(R.id.element_title_text);
+        TextView artist = (TextView)view.findViewById(R.id.element_artist_text);
         TextView bpm   = (TextView)view.findViewById(R.id.element_text_bpm);
 
         BPM bpmElement = mListDatas.get (aPosition);
         if (bpmElement != null) {
-            title.setText(bpmElement.getName ());
+            title.setText(bpmElement.getTitle());
+            if (!bpmElement.getArtist().isEmpty()) {
+                artist.setText(" - " + bpmElement.getArtist());
+            }
             bpm.setText(bpmElement.getBpmStr());
         }
 

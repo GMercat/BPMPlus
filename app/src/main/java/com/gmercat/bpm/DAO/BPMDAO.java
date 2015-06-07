@@ -11,15 +11,26 @@ public class BPMDAO {
     public static final String TABLE_NAME   = "bpms";
     public static final String KEY          = "id";
     public static final String NAME         = "name";
+    public static final String TITLE        = "title";
+    public static final String ARTIST       = "artist";
     public static final String VALUE        = "value";
 
     public static final String TABLE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME
             + " (" + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + NAME + " TEXT, " + VALUE + " REAL);";
+            + TITLE + " TEXT, " + ARTIST + " TEXT, " + VALUE + " REAL);";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    protected final static int      VERSION     = 1;
+    public static final String TABLE_MIGRATION_1_2_ADD_TITLE = "ALTER TABLE " + TABLE_NAME +
+            " ADD " + TITLE + " TEXT;";
+
+    public static final String TABLE_MIGRATION_1_2_COPY_NAME_TITLE = "UPDATE " + TABLE_NAME +
+            " SET " + TITLE + "=" + NAME + ";";
+
+    public static final String TABLE_MIGRATION_1_2_ADD_ARTIST = "ALTER TABLE " + TABLE_NAME +
+            " ADD " + ARTIST + " TEXT DEFAULT \"\";";
+
+    protected final static int      VERSION     = 2;
     protected final static String   FILENAME    = "database.db";
 
     protected SQLiteDatabase    mDb         = null;
@@ -39,7 +50,8 @@ public class BPMDAO {
 
     public int add (BPM aBpm) {
         ContentValues value = new ContentValues ();
-        value.put(NAME, aBpm.getName ());
+        value.put(TITLE, aBpm.getTitle());
+        value.put(ARTIST, aBpm.getArtist());
         value.put(VALUE, aBpm.getBpm());
         return (int)mDb.insert(TABLE_NAME, null, value);
     }
@@ -54,12 +66,13 @@ public class BPMDAO {
 
     public void update (BPM aBpm) {
         ContentValues value = new ContentValues ();
-        value.put(NAME, aBpm.getName ());
+        value.put(TITLE, aBpm.getTitle());
+        value.put(ARTIST, aBpm.getArtist());
         value.put(VALUE, aBpm.getBpm ());
         mDb.update(TABLE_NAME, value, KEY  + " = ?", new String[] {String.valueOf(aBpm.getId())});
     }
 
     public Cursor getAllBPMs () {
-        return mDb.rawQuery("SELECT * FROM "+TABLE_NAME,null);
+        return mDb.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 }

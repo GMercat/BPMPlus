@@ -18,16 +18,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/element_title_text"
             android:textAppearance="@style/BPMListTitleStyle"
-            android:singleLine="true"
-            android:text="Mon titre" />
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/element_artist_text"
             android:textAppearance="@style/BPMListArtistStyle"
-            android:singleLine="true"
-            android:text=" - Mon artiste" />
+            android:singleLine="true" />
     </LinearLayout>
 
     <TextView android:layout_width="0dp"
@@ -37,7 +35,6 @@
         android:singleLine="true"
         android:layout_weight="1"
         android:textColor="@drawable/text_list_element_title_bpm_foreground"
-        android:text="999"
         android:gravity="center" />
 
 </LinearLayout>

@@ -102,10 +102,11 @@ public class MainActivity   extends ActionBarActivity
 
         while (bpmCursor.moveToNext()) {
             int    id       = bpmCursor.getInt(bpmCursor.getColumnIndex(BPMDAO.KEY));
-            String title    = bpmCursor.getString(bpmCursor.getColumnIndex(BPMDAO.NAME));
+            String title    = bpmCursor.getString(bpmCursor.getColumnIndex(BPMDAO.TITLE));
+            String artist   = bpmCursor.getString(bpmCursor.getColumnIndex(BPMDAO.ARTIST));
             int    bpmValue = bpmCursor.getInt(bpmCursor.getColumnIndex(BPMDAO.VALUE));
 
-            BPM bpmElement = new BPM(id, title, bpmValue);
+            BPM bpmElement = new BPM(id, title, artist, bpmValue);
             mBPMList.add(bpmElement);
         }
 
@@ -114,7 +115,7 @@ public class MainActivity   extends ActionBarActivity
                 mPositionElementSelected = aPosition;
                 if (mPositionElementSelected != -1) {
                     DialogSetElement newDialogSetElement = new DialogSetElement();
-                    newDialogSetElement.setElementName(mBPMList.get(mPositionElementSelected).getName());
+                    newDialogSetElement.setElementName(mBPMList.get(mPositionElementSelected).getTitle());
                     newDialogSetElement.show(getFragmentManager(), "setElement");
                 }
             }
@@ -182,10 +183,11 @@ public class MainActivity   extends ActionBarActivity
 
     @Override
     public void onDialogNewElementPositiveClick(DialogNewElement dialog) {
-        String elementName = dialog.getElement();
-        if (!elementName.isEmpty()) {
+        String title = dialog.getTitle();
+        String artist = dialog.getArtist();
+        if (!title.isEmpty()) {
             // Database
-            BPM newBPM = new BPM(0, elementName, mBPMValue);
+            BPM newBPM = new BPM(0, title, artist, mBPMValue);
             int idNewBPM = mBPMDataAcces.add(newBPM);
             newBPM.setId(idNewBPM);
 
@@ -199,7 +201,7 @@ public class MainActivity   extends ActionBarActivity
     public void onDialogSetElementPositiveClick(DialogSetElement aDialog) {
         String elementName = aDialog.getElementNameEdit();
         if (!elementName.isEmpty() && (mPositionElementSelected != -1)) {
-            mBPMList.get(mPositionElementSelected).setName(elementName);
+            mBPMList.get(mPositionElementSelected).setTitle(elementName);
             mBPMDataAcces.update(mBPMList.get(mPositionElementSelected));
             mBPMAdapter.notifyDataSetChanged();
 
@@ -285,7 +287,7 @@ public class MainActivity   extends ActionBarActivity
             requestFile.createNewFile();
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(requestFile)));
             for (BPM bpm : mBPMList) {
-                writer.write(bpm.getName() + ";" + bpm.getBpmStr());
+                writer.write(bpm.getTitle() + ";" + bpm.getArtist() + ";" + bpm.getBpmStr());
                 writer.newLine();
             }
         } catch (Exception e) {
