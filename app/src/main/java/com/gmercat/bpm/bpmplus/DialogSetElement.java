@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class DialogSetElement extends DialogFragment{
 
     public interface DialogSetElementListener {
-        void onDialogSetElementPositiveClick(DialogSetElement dialog);
+        void onDialogSetElementPositiveClick(DialogSetElement aDialog);
     }
 
     /// Members

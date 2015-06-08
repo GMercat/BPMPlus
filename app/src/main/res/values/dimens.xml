@@ -19,4 +19,6 @@
 
     <dimen name="BPMElementTextSize">24sp</dimen>
     <dimen name="EditDialogSize">20dp</dimen>
+
+    <dimen name="sortDialogPadding">8dp</dimen>
 </resources>

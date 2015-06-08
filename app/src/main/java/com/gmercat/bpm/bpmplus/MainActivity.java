@@ -35,7 +35,8 @@ public class MainActivity   extends ActionBarActivity
                             implements  DialogNewElement.DialogNewElementListener,
                                         DialogSetElement.DialogSetElementListener,
                                         DialogDeleteElement.DialogDeleteElementListener,
-                                        DialogDeleteAllElement.DialogDeleteAllElementListener  {
+                                        DialogDeleteAllElement.DialogDeleteAllElementListener,
+                                        DialogSortList.DialogSortListListener {
 
     /// Members
     private ArrayList<BPM>  mBPMList        = new ArrayList<>();
@@ -168,9 +169,13 @@ public class MainActivity   extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (aMenuItem.getItemId()) {
-
             case R.id.action_share_all:
                 onShareList();
+                return true;
+
+            case R.id.action_sort:
+                DialogSortList newDialogSortList = new DialogSortList();
+                newDialogSortList.show(getFragmentManager(), "sortList");
                 return true;
 
             case R.id.action_delete_all:
@@ -230,6 +235,11 @@ public class MainActivity   extends ActionBarActivity
         mBPMAdapter.notifyDataSetChanged();
 
         mPositionElementSelected = -1;
+    }
+
+    @Override
+    public void onDialogSortListPositiveClick(DialogSortList aDialog) {
+        // TODO
     }
 
     private void resetBPMValue() {
@@ -305,5 +315,9 @@ public class MainActivity   extends ActionBarActivity
             }
         }
         return requestFile;
+    }
+
+    private void onSortList() {
+
     }
 }

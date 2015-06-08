@@ -42,6 +42,10 @@
         <item name="android:textSize">@dimen/EditDialogSize</item>
     </style>
 
+    <style name="SortDialogStyle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">@dimen/EditDialogSize</item>
+    </style>
+
     <drawable name="actionbar_background">#1e88e5</drawable>
     <drawable name="application_background">#ffffff</drawable>
     <drawable name="list_background">#ffffff</drawable>
