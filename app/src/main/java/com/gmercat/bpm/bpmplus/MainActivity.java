@@ -115,7 +115,8 @@ public class MainActivity   extends ActionBarActivity
                 mPositionElementSelected = aPosition;
                 if (mPositionElementSelected != -1) {
                     DialogSetElement newDialogSetElement = new DialogSetElement();
-                    newDialogSetElement.setElementName(mBPMList.get(mPositionElementSelected).getTitle());
+                    newDialogSetElement.setTitle(mBPMList.get(mPositionElementSelected).getTitle());
+                    newDialogSetElement.setArtist(mBPMList.get(mPositionElementSelected).getArtist());
                     newDialogSetElement.show(getFragmentManager(), "setElement");
                 }
             }
@@ -199,9 +200,11 @@ public class MainActivity   extends ActionBarActivity
 
     @Override
     public void onDialogSetElementPositiveClick(DialogSetElement aDialog) {
-        String elementName = aDialog.getElementNameEdit();
-        if (!elementName.isEmpty() && (mPositionElementSelected != -1)) {
-            mBPMList.get(mPositionElementSelected).setTitle(elementName);
+        String title = aDialog.getTitle();
+        String artist = aDialog.getArtist();
+        if (!title.isEmpty() && (mPositionElementSelected != -1)) {
+            mBPMList.get(mPositionElementSelected).setTitle(title);
+            mBPMList.get(mPositionElementSelected).setArtist(artist);
             mBPMDataAcces.update(mBPMList.get(mPositionElementSelected));
             mBPMAdapter.notifyDataSetChanged();
 

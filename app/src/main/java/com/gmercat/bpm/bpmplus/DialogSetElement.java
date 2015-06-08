@@ -19,23 +19,36 @@ public class DialogSetElement extends DialogFragment{
 
     /// Members
     DialogSetElementListener    mListener;
-    EditText                    mElementNameEdit;
-    String                      mElementName;
+    EditText                    mTitleEdit;
+    EditText                    mArtistEdit;
+    String                      mTitle;
+    String                      mArtist;
 
-    public void setElementName(String aElementName) {
-        mElementName = aElementName;
+    public void setTitle(String aTitle) {
+        mTitle = aTitle;
     }
 
-    public String getElementNameEdit() {
-        return mElementNameEdit.getText().toString();
+    public void setArtist(String aArtist) {
+        mArtist = aArtist;
+    }
+
+    public String getTitle() {
+        return mTitleEdit.getText().toString();
+    }
+
+
+    public String getArtist() {
+        return mArtistEdit.getText().toString();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_set, null);
-        mElementNameEdit = (EditText) view.findViewById(R.id.set_element);
-        mElementNameEdit.setText(mElementName, TextView.BufferType.EDITABLE);
+        mTitleEdit = (EditText) view.findViewById(R.id.set_title);
+        mTitleEdit.setText(mTitle, TextView.BufferType.EDITABLE);
+        mArtistEdit = (EditText) view.findViewById(R.id.set_artist);
+        mArtistEdit.setText(mArtist, TextView.BufferType.EDITABLE);
 
         builder.setTitle(R.string.title_set_element);
 

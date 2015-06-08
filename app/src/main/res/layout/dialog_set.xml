@@ -10,6 +10,17 @@
         android:layout_weight="1"
         android:maxLines="1"
         android:singleLine="true"
-        android:id="@+id/set_element"
+        android:id="@+id/set_title"
         android:textAppearance="@style/EditDialogStyle" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:hint="@string/add_artist"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:id="@+id/set_artist"
+        android:textAppearance="@style/EditDialogStyle" />
+
 </LinearLayout>
