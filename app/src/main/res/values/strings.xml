@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BPM Plus</string>
 
+    <string name="sort_type">Sort type</string>
+
     <string name="bpm">0</string>
     <string name="action_settings">Settings</string>
     <string name="title_share">Share via</string>

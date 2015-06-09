@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|start"
+        android:id="@+id/sort_radioGroup"
         android:padding="@dimen/sortDialogPadding">
 
         <RadioButton
@@ -14,8 +15,9 @@
             android:layout_height="wrap_content"
             android:text="@string/sort_by_creation"
             android:id="@+id/sort_by_creation"
-            android:gravity="center_vertical|start|left"
-            android:textAppearance="@style/SortDialogStyle" />
+            android:gravity="center_vertical|start"
+            android:textAppearance="@style/SortDialogStyle"
+            android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"

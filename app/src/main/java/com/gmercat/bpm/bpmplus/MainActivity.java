@@ -1,7 +1,9 @@
 package com.gmercat.bpm.bpmplus;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gmercat.bpm.DAO.BPMAdapter;
 import com.gmercat.bpm.DAO.BPMDAO;
@@ -44,6 +47,8 @@ public class MainActivity   extends ActionBarActivity
     private BPMDAO          mBPMDataAcces   = null;
     private BPMAdapter      mBPMAdapter     = null;
 
+    private DialogSortList.SortType mSortType = DialogSortList.SortType.eCreation;
+
     private long    mLastCurrentTime            = 0;
     private int     mNbGap                      = -1;
     private int     mGapTime                    = 0;
@@ -56,6 +61,8 @@ public class MainActivity   extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mSortType = loadSortType();
 
         ListView bpmListView = (ListView) findViewById(R.id.listBPM);
         bpmListView.setVisibility(View.VISIBLE);
@@ -175,6 +182,7 @@ public class MainActivity   extends ActionBarActivity
 
             case R.id.action_sort:
                 DialogSortList newDialogSortList = new DialogSortList();
+                newDialogSortList.setRadioChecked(mSortType);
                 newDialogSortList.show(getFragmentManager(), "sortList");
                 return true;
 
@@ -239,7 +247,29 @@ public class MainActivity   extends ActionBarActivity
 
     @Override
     public void onDialogSortListPositiveClick(DialogSortList aDialog) {
+        mSortType = aDialog.getRadioChecked();
+        saveSortType();
+
         // TODO
+        String sortType;
+        switch (mSortType){
+            case eTitle:
+                sortType = "Title";
+                break;
+            case eArtist:
+                sortType = "Artist";
+                break;
+            case eBPM:
+                sortType = "BPM";
+                break;
+            case eCreation:
+                default:
+                sortType = "Creation";
+                break;
+        }
+
+        Toast.makeText(this,
+                sortType, Toast.LENGTH_SHORT).show();
     }
 
     private void resetBPMValue() {
@@ -315,6 +345,21 @@ public class MainActivity   extends ActionBarActivity
             }
         }
         return requestFile;
+    }
+
+    private DialogSortList.SortType loadSortType() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        int defaultValue = getResources().getInteger(R.integer.sort_type_default);
+        int sortType = sharedPref.getInt(getString(R.string.sort_type), defaultValue);
+
+        return DialogSortList.SortType.values()[sortType];
+    }
+
+    private void saveSortType() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.sort_type), mSortType.ordinal());
+        editor.commit();
     }
 
     private void onSortList() {
