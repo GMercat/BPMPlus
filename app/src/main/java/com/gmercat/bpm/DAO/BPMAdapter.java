@@ -54,6 +54,8 @@ public class BPMAdapter extends BaseAdapter{
             title.setText(bpmElement.getTitle());
             if (!bpmElement.getArtist().isEmpty()) {
                 artist.setText(" - " + bpmElement.getArtist());
+            } else {
+                artist.setText("");
             }
             bpm.setText(bpmElement.getBpmStr());
         }

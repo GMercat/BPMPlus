@@ -21,6 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gmercat.bpm.Comparator.ComparatorArtist;
+import com.gmercat.bpm.Comparator.ComparatorBPM;
+import com.gmercat.bpm.Comparator.ComparatorCreation;
+import com.gmercat.bpm.Comparator.ComparatorTitle;
 import com.gmercat.bpm.DAO.BPMAdapter;
 import com.gmercat.bpm.DAO.BPMDAO;
 
@@ -30,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static java.lang.Math.*;
 
@@ -141,7 +146,8 @@ public class MainActivity   extends ActionBarActivity
 
         mBPMAdapter = new BPMAdapter(this, mBPMList);
         bpmListView.setAdapter(mBPMAdapter);
-        mBPMAdapter.notifyDataSetChanged();
+
+        onSortList();
     }
 
     @Override
@@ -204,9 +210,9 @@ public class MainActivity   extends ActionBarActivity
             BPM newBPM = new BPM(0, title, artist, mBPMValue);
             int idNewBPM = mBPMDataAcces.add(newBPM);
             newBPM.setId(idNewBPM);
-
             mBPMList.add(newBPM);
 
+            onSortList();
             resetBPMValue();
         }
     }
@@ -219,9 +225,9 @@ public class MainActivity   extends ActionBarActivity
             mBPMList.get(mPositionElementSelected).setTitle(title);
             mBPMList.get(mPositionElementSelected).setArtist(artist);
             mBPMDataAcces.update(mBPMList.get(mPositionElementSelected));
-            mBPMAdapter.notifyDataSetChanged();
-
             mPositionElementSelected = -1;
+
+            onSortList();
         }
     }
 
@@ -230,9 +236,9 @@ public class MainActivity   extends ActionBarActivity
         if (mPositionElementSelected != -1) {
             mBPMDataAcces.del(mBPMList.get(mPositionElementSelected).getId());
             mBPMList.remove(mPositionElementSelected);
-            mBPMAdapter.notifyDataSetChanged();
-
             mPositionElementSelected = -1;
+
+            onSortList();
         }
     }
 
@@ -249,27 +255,7 @@ public class MainActivity   extends ActionBarActivity
     public void onDialogSortListPositiveClick(DialogSortList aDialog) {
         mSortType = aDialog.getRadioChecked();
         saveSortType();
-
-        // TODO
-        String sortType;
-        switch (mSortType){
-            case eTitle:
-                sortType = "Title";
-                break;
-            case eArtist:
-                sortType = "Artist";
-                break;
-            case eBPM:
-                sortType = "BPM";
-                break;
-            case eCreation:
-                default:
-                sortType = "Creation";
-                break;
-        }
-
-        Toast.makeText(this,
-                sortType, Toast.LENGTH_SHORT).show();
+        onSortList();
     }
 
     private void resetBPMValue() {
@@ -363,6 +349,21 @@ public class MainActivity   extends ActionBarActivity
     }
 
     private void onSortList() {
-
+        switch (mSortType){
+            case eTitle:
+                Collections.sort(mBPMList, new ComparatorTitle());
+                break;
+            case eArtist:
+                Collections.sort(mBPMList, new ComparatorArtist());
+                break;
+            case eBPM:
+                Collections.sort(mBPMList, new ComparatorBPM());
+                break;
+            case eCreation:
+            default:
+                Collections.sort(mBPMList, new ComparatorCreation());
+                break;
+        }
+        mBPMAdapter.notifyDataSetChanged();
     }
 }
